@@ -11,7 +11,7 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 
 	<blockquote><h3><?php echo cut_str(get_text($view['wr_subject']), 70); ?></h3></blockquote>
 
-	<div class="d-flex mb-4">
+	<div class="d-flex mb-2">
 		<img class="view-icon rounded me-3" src="<?php echo $mb_info['img'] ?>">
 		<div>
 			<ul class="list-inline mb-0">
@@ -32,7 +32,6 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 	</div>
 
 	<div id="bo_v_con" class="mb-2">
-
 		<?php
 		// 파일 출력
 		for ($i=0; $i<=count($view['file']); $i++)
@@ -42,7 +41,6 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		// 본문 내용
 		echo str_replace('<img ', '<img class="img-fluid d-block" ', $view['content']);
 		?>
-
 	</div>
 
 	<div class="mb-2">
