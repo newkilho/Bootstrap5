@@ -36,10 +36,10 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		// 파일 출력
 		for ($i=0; $i<=count($view['file']); $i++)
 			if ($view['file'][$i]['view'])
-				echo '<img class="img-fluid d-block" src="'.$view['file'][$i]['path'].'/'.$view['file'][$i]['file'].'">';
+				echo '<img class="img-fluid" src="'.$view['file'][$i]['path'].'/'.$view['file'][$i]['file'].'">';
 
 		// 본문 내용
-		echo str_replace('<img ', '<img class="img-fluid d-block" ', $view['content']);
+		echo str_replace('<img ', '<img class="img-fluid" ', $view['content']);
 		?>
 	</div>
 

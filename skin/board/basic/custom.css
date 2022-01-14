@@ -45,8 +45,6 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 
 @media (max-width: 575px)
 {
-	#captcha_audio {display:none !important;}
-
 	.xs-100 { width: 100%; }
 	.xs-full {
 		width: 100vw;

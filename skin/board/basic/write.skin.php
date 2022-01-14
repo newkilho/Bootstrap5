@@ -171,8 +171,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 
 				<?php } ?>
 			</div>
 			<?php if($w == 'u' && $file[$i]['file']) { ?>
+			<div class="pt-1">
 			<input type="checkbox" class="form-check-input" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1">
-			<label class="form-check-label" for="bf_file_del<?php echo $i ?>">파일 삭제</label>
+			<label class="form-check-label" for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
+			</div>
 			<?php } ?>
 		</div>
 	</div>

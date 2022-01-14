@@ -87,7 +87,7 @@ $write_pages = chg_paging($write_pages);
 	<?php } ?>
 	</div>
 
-	<div class="d-flex justify-content-center justify-content-sm-end">
+	<div class="d-flex justify-content-center justify-content-sm-end mb-4">
 		<?php echo $write_pages;  ?>
 	</div>
 
