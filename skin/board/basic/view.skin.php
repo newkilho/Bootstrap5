@@ -84,7 +84,6 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 			{
 				if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
 				{
-					$view['file'][$i]['href'] = str_replace('/bbs/', '/', $view['file'][$i]['href']);
 		?>
 		<li class="list-group-item">
 			<small class="text-muted"><i class="fa fa-download"></i></small>

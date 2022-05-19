@@ -33,7 +33,7 @@ switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
 				</a>
 			</div>
 			<div class="col-lg-5 d-flex align-items-center justify-content-center justify-content-lg-start mb-4 mb-lg-0">
-				© Copyright 2022. All Rights Reserved.
+				© Copyright <?php echo date('Y', G5_SERVER_TIME) ?>. All Rights Reserved.
 			</div>
 			<div class="col-lg-5 d-flex align-items-center justify-content-center justify-content-lg-end">
 				<nav id="sub-menu" class="mb-0">
