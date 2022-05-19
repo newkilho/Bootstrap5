@@ -4,8 +4,17 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 0);
 
+$view['content'] = conv_content($view['wr_content'], $html, false);
+if (strstr($sfl, 'content'))
+    $view['content'] = search_font($stx, $view['content']);
+
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
+//print_r($view);
 ?>
+
+<? if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
+<div class="mb-4"><?=$g5['ads']?></div>
+<? } ?>
 
 <div>
 
@@ -75,6 +84,7 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 			{
 				if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
 				{
+					$view['file'][$i]['href'] = str_replace('/bbs/', '/', $view['file'][$i]['href']);
 		?>
 		<li class="list-group-item">
 			<small class="text-muted"><i class="fa fa-download"></i></small>
@@ -143,6 +153,10 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		<?php if ($next_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-down"></i><span class="d-none d-md-inline"> 다음글</span></small> <a href="<?php echo $next_href ?>" class="text-dark"><?php echo $next_wr_subject;?></a> <small class="float-end text-muted d-none d-md-inline"><?php echo str_replace('-', '.', substr($next_wr_date, '2', '8')); ?></small></li><?php } ?>
 	</ul>
 	<?php } ?>
+
+	<? if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
+	<div class="mb-4"><?=$g5['ads']?></div>
+	<? } ?>
 
 	<?php
 	// 코멘트 입출력

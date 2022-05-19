@@ -103,7 +103,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 			</div>
 			<?php }	?>
 
-			<div class="form-check">
+			<div class="form-check mb-2">
 				<input type="checkbox" name="wr_secret" value="secret" id="wr_secret" class="form-check-input">
 				<label class="form-check-label" for="wr_secret">비밀글 사용</label>
 			</div>

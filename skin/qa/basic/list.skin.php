@@ -84,7 +84,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 </div>
 
 <?php if($list_pages) { ?>
-<div class="d-flex justify-content-center justify-content-sm-end">
+<div class="d-flex justify-content-center justify-content-sm-end mb-4">
 	<?php echo $list_pages;  ?>
 </div>
 <? } ?>

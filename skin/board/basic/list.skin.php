@@ -77,7 +77,7 @@ $write_pages = chg_paging($write_pages);
 			?>
 			<tr class="<?php if($list[$i]['is_notice']) echo "table-primary"; ?>">
 				<?php if($is_checkbox) { ?>
-				<td>
+				<td class="d-none d-md-table-cell">
 					<input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>" class="form-check-input">
 				</td>
 				<?php } ?>
@@ -90,7 +90,7 @@ $write_pages = chg_paging($write_pages);
 					<?php echo $list[$i]['num'] ?>
 					<?php } ?>
 				</td>
-				<td>
+				<td class="text-truncate">
 					<?php if($is_category && $list[$i]['ca_name']) { ?>
 					<a href="<?php echo $list[$i]['ca_name_href'] ?>" class="badge bg-primary"><?php echo $list[$i]['ca_name'] ?></a>
 					<?php } ?>

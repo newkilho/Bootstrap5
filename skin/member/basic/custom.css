@@ -19,55 +19,42 @@ body {
   height:auto;
 }
 
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-.form-signin .checkbox {
-  font-weight: 400;
-}
-.form-signin .form-control {
+.mb_login .form-control {
   position: relative;
   box-sizing: border-box;
   height: auto;
   padding: 10px;
 }
-.form-signin .form-control:focus {
+
+.mb_login .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="user"] {
+
+.mb_login input[type="user"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.form-signin input[type="password"] {
+
+.mb_login input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.form-join {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-
-.form-password {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
+.mb_login, .register, .member_cert_refresh, .mb_confirm, .password {
+  width: 100%; 
+  max-width: 330px; 
+  padding: 15px; 
+  margin: auto; 
 }
 
 .form-info {
-	display:block;
-	margin:5px 0 0;
-	font-size:80%;
-	color:#ff0000;
-	letter-spacing:-0.1em
+  display:block;
+  margin:5px 0 0;
+  font-size:80%;
+  color:#ff0000;
+  letter-spacing:-0.1em
 }
 
 /* login.skin.php */

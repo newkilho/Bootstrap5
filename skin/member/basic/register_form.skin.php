@@ -1,17 +1,16 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-add_javascript(G5_POSTCODE_JS, 0);
+//add_javascript(G5_POSTCODE_JS, 0);
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
+add_javascript('<script src="'.G5_JS_URL.'/jquery.register_form.js"></script>', 0);
+if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+    add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 0);
 ?>
 	
-<script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
+<!-- 회원정보 입력/수정 시작 { -->
 
-<?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-<script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
-<?php } ?>
-
-<div class="form-join">
+<div class="register">
 <form id="fregisterform" name="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
 
 	<input type="hidden" name="w" value="<?php echo $w ?>">
@@ -29,6 +28,45 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 	<div class="text-center mb-5">
 		<a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>" style="max-width:150px; width:100%; height:auto;"></a>
 	</div>
+
+	<?php 
+	if ($config['cf_cert_use']) {
+		if (!$config['cf_cert_simple'] && !$config['cf_cert_hp'] && $config['cf_cert_ipin']) { $desc_phone = ''; }
+	?>
+	<div class="mb-4">
+		<div class="cert_btn btn-group xs-100">
+			<?php if(!empty($config['cf_cert_simple'])) { ?>
+			<button type="button" id="win_sa_kakao_cert" class="btn btn-primary win_sa_cert" data-type="">간편인증</button>
+			<?php } if(!empty($config['cf_cert_hp']) || !empty($config['cf_cert_ipin'])) { ?>
+			<?php if(!empty($config['cf_cert_hp'])) { ?>
+			<button type="button" id="win_hp_cert" class="btn btn-primary">휴대폰인증</button>
+			<?php } if(!empty($config['cf_cert_ipin'])) { ?>
+			<button type="button" id="win_ipin_cert" class="btn btn-primary">아이폰인증</button>
+			<?php } ?>
+			<?php } ?>
+		</div>
+		<span style="font-size: 0.8rem; color: #ff0000">※ 본인확인을 위해 인증버튼을 클릭하세요.</span>
+	</div>
+	<?php
+	}
+
+	if ($config['cf_cert_use'] && $member['mb_certify']) { echo 'test';
+		switch  ($member['mb_certify']) {
+			case "simple": 
+				$mb_cert = "간편인증";
+				break;
+			case "ipin": 
+				$mb_cert = "아이핀";
+				break;
+			case "hp": 
+				$mb_cert = "휴대폰";
+			break;
+		}                 
+	?>
+		<div id="msg_certify mb-2">
+		<strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
+		</div>
+	<?php } ?>
 
 	<div class="mb-4">
 		<label for="reg_mb_id">아이디</label>
@@ -50,34 +88,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 	<div class="mb-4">
 		<label for="reg_mb_name">이름</label>
 		<input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="form-control <?php echo $readonly ?>" placeholder="이름">
-
-		<?php
-		if($config['cf_cert_use']) {
-		?>
-		<div class="mt-1">
-		<?php
-			if($config['cf_cert_ipin'])
-				echo '<button type="button" id="win_ipin_cert" class="btn btn-sm btn-info">아이핀 본인확인</button>'.PHP_EOL;
-			if($config['cf_cert_hp'])
-				echo '<button type="button" id="win_hp_cert" class="btn btn-sm btn-info">휴대폰 본인확인</button>'.PHP_EOL;
-
-			echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
-		?>
-		</div>
-		<?php 
-		} 
-
-		if ($config['cf_cert_use'] && $member['mb_certify']) {
-			if($member['mb_certify'] == 'ipin')
-				$mb_cert = '아이핀';
-			else
-				$mb_cert = '휴대폰';
-		?>
-
-		<div id="msg_certify">
-			<strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
-		</div>
-		<?php } ?>
 	</div>
 
 	<div class="mb-4">
@@ -254,192 +264,211 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 
 <script>
 $(function() {
-	$("#reg_zip_find").css("display", "inline-block");
+    $("#reg_zip_find").css("display", "inline-block");
+    var pageTypeParam = "pageType=register";
 
-	<?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
-	// 아이핀인증
-	$("#win_ipin_cert").click(function() {
-		if(!cert_confirm())
-			return false;
+	<?php if($config['cf_cert_use'] && $config['cf_cert_simple']) { ?>
+	// 이니시스 간편인증
+	var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
+	var type = "";    
+    var params = "";
+    var request_url = "";
 
-		var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php";
-		certify_win_open('kcb-ipin', url);
-		return;
+	$(".win_sa_cert").click(function() {
+		if(!cert_confirm()) return false;
+		type = $(this).data("type");
+		params = "?directAgency=" + type + "&" + pageTypeParam;
+        request_url = url + params;
+        call_sa(request_url);
 	});
+    <?php } ?>
+    <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
+    // 아이핀인증
+    var params = "";
+    $("#win_ipin_cert").click(function() {
+		if(!cert_confirm()) return false;
+        params = "?" + pageTypeParam;
+        var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php"+params;
+        certify_win_open('kcb-ipin', url);
+        return;
+    });
 
-	<?php } ?>
-	<?php if($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
-	// 휴대폰인증
-	$("#win_hp_cert").click(function() {
-		if(!cert_confirm())
-			return false;
-
-		<?php
-		switch($config['cf_cert_hp']) {
-			case 'kcb':
-				$cert_url = G5_OKNAME_URL.'/hpcert1.php';
-				$cert_type = 'kcb-hp';
-				break;
-			case 'kcp':
-				$cert_url = G5_KCPCERT_URL.'/kcpcert_form.php';
-				$cert_type = 'kcp-hp';
-				break;
-			case 'lg':
-				$cert_url = G5_LGXPAY_URL.'/AuthOnlyReq.php';
-				$cert_type = 'lg-hp';
-				break;
-			default:
-				echo 'alert("기본환경설정에서 휴대폰 본인확인 설정을 해주십시오");';
-				echo 'return false;';
-				break;
-		}
-		?>
-
-		certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>");
-		return;
-	});
-	<?php } ?>
+    <?php } ?>
+    <?php if($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
+    // 휴대폰인증
+    var params = "";
+    $("#win_hp_cert").click(function() {
+		if(!cert_confirm()) return false;
+        params = "?" + pageTypeParam;
+        <?php     
+        switch($config['cf_cert_hp']) {
+            case 'kcb':                
+                $cert_url = G5_OKNAME_URL.'/hpcert1.php';
+                $cert_type = 'kcb-hp';
+                break;
+            case 'kcp':
+                $cert_url = G5_KCPCERT_URL.'/kcpcert_form.php';
+                $cert_type = 'kcp-hp';
+                break;
+            case 'lg':
+                $cert_url = G5_LGXPAY_URL.'/AuthOnlyReq.php';
+                $cert_type = 'lg-hp';
+                break;
+            default:
+                echo 'alert("기본환경설정에서 휴대폰 본인확인 설정을 해주십시오");';
+                echo 'return false;';
+                break;
+        }
+        ?>
+        
+        certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>"+params);
+        return;
+    });
+    <?php } ?>
 });
 
 // submit 최종 폼체크
 function fregisterform_submit(f)
 {
-	// 회원아이디 검사
-	if (f.w.value == "") {
-		var msg = reg_mb_id_check();
-		if (msg) {
-			alert(msg);
-			f.mb_id.select();
-			return false;
-		}
-	}
+    // 회원아이디 검사
+    if (f.w.value == "") {
+        var msg = reg_mb_id_check();
+        if (msg) {
+            alert(msg);
+            f.mb_id.select();
+            return false;
+        }
+    }
 
-	if (f.w.value == "") {
-		if (f.mb_password.value.length < 3) {
-			alert("비밀번호를 3글자 이상 입력하십시오.");
-			f.mb_password.focus();
-			return false;
-		}
-	}
+    if (f.w.value == "") {
+        if (f.mb_password.value.length < 3) {
+            alert("비밀번호를 3글자 이상 입력하십시오.");
+            f.mb_password.focus();
+            return false;
+        }
+    }
 
-	if (f.mb_password.value != f.mb_password_re.value) {
-		alert("비밀번호가 같지 않습니다.");
-		f.mb_password_re.focus();
-		return false;
-	}
+    if (f.mb_password.value != f.mb_password_re.value) {
+        alert("비밀번호가 같지 않습니다.");
+        f.mb_password_re.focus();
+        return false;
+    }
 
-	if (f.mb_password.value.length > 0) {
-		if (f.mb_password_re.value.length < 3) {
-			alert("비밀번호를 3글자 이상 입력하십시오.");
-			f.mb_password_re.focus();
-			return false;
-		}
-	}
+    if (f.mb_password.value.length > 0) {
+        if (f.mb_password_re.value.length < 3) {
+            alert("비밀번호를 3글자 이상 입력하십시오.");
+            f.mb_password_re.focus();
+            return false;
+        }
+    }
 
-	// 이름 검사
-	if (f.w.value=="") {
-		if (f.mb_name.value.length < 1) {
-			alert("이름을 입력하십시오.");
-			f.mb_name.focus();
-			return false;
-		}
+    // 이름 검사
+    if (f.w.value=="") {
+        if (f.mb_name.value.length < 1) {
+            alert("이름을 입력하십시오.");
+            f.mb_name.focus();
+            return false;
+        }
 
-		/*
-		var pattern = /([^가-힣\x20])/i;
-		if (pattern.test(f.mb_name.value)) {
-			alert("이름은 한글로 입력하십시오.");
-			f.mb_name.select();
-			return false;
-		}
-		*/
-	}
+        /*
+        var pattern = /([^가-힣\x20])/i;
+        if (pattern.test(f.mb_name.value)) {
+            alert("이름은 한글로 입력하십시오.");
+            f.mb_name.select();
+            return false;
+        }
+        */
+    }
 
-	<?php if($w == '' && $config['cf_cert_use'] && $config['cf_cert_req']) { ?>
-	// 본인확인 체크
-	if(f.cert_no.value=="") {
-		alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
-		return false;
-	}
-	<?php } ?>
+    <?php if($w == '' && $config['cf_cert_use'] && $config['cf_cert_req']) { ?>
+    // 본인확인 체크
+    if(f.cert_no.value=="") {
+        alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
+        return false;
+    }
+    <?php } ?>
 
-	// 닉네임 검사
-	if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {
-		var msg = reg_mb_nick_check();
-		if (msg) {
-			alert(msg);
-			f.reg_mb_nick.select();
-			return false;
-		}
-	}
+    // 닉네임 검사
+    if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {
+        var msg = reg_mb_nick_check();
+        if (msg) {
+            alert(msg);
+            f.reg_mb_nick.select();
+            return false;
+        }
+    }
 
-	// E-mail 검사
-	if ((f.w.value == "") || (f.w.value == "u" && f.mb_email.defaultValue != f.mb_email.value)) {
-		var msg = reg_mb_email_check();
-		if (msg) {
-			alert(msg);
-			f.reg_mb_email.select();
-			return false;
-		}
-	}
+    // E-mail 검사
+    if ((f.w.value == "") || (f.w.value == "u" && f.mb_email.defaultValue != f.mb_email.value)) {
+        var msg = reg_mb_email_check();
+        if (msg) {
+            alert(msg);
+            f.reg_mb_email.select();
+            return false;
+        }
+    }
 
-	<?php if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {  ?>
-	// 휴대폰번호 체크
-	var msg = reg_mb_hp_check();
-	if (msg) {
-		alert(msg);
-		f.reg_mb_hp.select();
-		return false;
-	}
-	<?php } ?>
+    <?php if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {  ?>
+    // 휴대폰번호 체크
+    var msg = reg_mb_hp_check();
+    if (msg) {
+        alert(msg);
+        f.reg_mb_hp.select();
+        return false;
+    }
+    <?php } ?>
 
-	if (typeof f.mb_icon != "undefined") {
-		if (f.mb_icon.value) {
-			if (!f.mb_icon.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
-				alert("회원아이콘이 이미지 파일이 아닙니다.");
-				f.mb_icon.focus();
-				return false;
-			}
-		}
-	}
+    if (typeof f.mb_icon != "undefined") {
+        if (f.mb_icon.value) {
+            if (!f.mb_icon.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
+                alert("회원아이콘이 이미지 파일이 아닙니다.");
+                f.mb_icon.focus();
+                return false;
+            }
+        }
+    }
 
-	if (typeof f.mb_img != "undefined") {
-		if (f.mb_img.value) {
-			if (!f.mb_img.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
-				alert("회원이미지가 이미지 파일이 아닙니다.");
-				f.mb_img.focus();
-				return false;
-			}
-		}
-	}
+    if (typeof f.mb_img != "undefined") {
+        if (f.mb_img.value) {
+            if (!f.mb_img.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
+                alert("회원이미지가 이미지 파일이 아닙니다.");
+                f.mb_img.focus();
+                return false;
+            }
+        }
+    }
 
-	if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
-		if (f.mb_id.value == f.mb_recommend.value) {
-			alert("본인을 추천할 수 없습니다.");
-			f.mb_recommend.focus();
-			return false;
-		}
+    if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
+        if (f.mb_id.value == f.mb_recommend.value) {
+            alert("본인을 추천할 수 없습니다.");
+            f.mb_recommend.focus();
+            return false;
+        }
 
-		var msg = reg_mb_recommend_check();
-		if (msg) {
-			alert(msg);
-			f.mb_recommend.select();
-			return false;
-		}
-	}
+        var msg = reg_mb_recommend_check();
+        if (msg) {
+            alert(msg);
+            f.mb_recommend.select();
+            return false;
+        }
+    }
 
-	<?php echo chk_captcha_js();  ?>
+    <?php echo chk_captcha_js();  ?>
 
-	document.getElementById("btn_submit").disabled = "disabled";
+    document.getElementById("btn_submit").disabled = "disabled";
 
-	return true;
+    return true;
 }
 
-$(function(){
+jQuery(function($){
 	//tooltip
-    $(".tooltip_icon").click(function(){
-        $(this).next(".tooltip").fadeIn(400);
-    }).mouseout(function(){
+    $(document).on("click", ".tooltip_icon", function(e){
+        $(this).next(".tooltip").fadeIn(400).css("display","inline-block");
+    }).on("mouseout", ".tooltip_icon", function(e){
         $(this).next(".tooltip").fadeOut();
     });
 });
+
 </script>
+
+<!-- } 회원정보 입력/수정 끝 -->

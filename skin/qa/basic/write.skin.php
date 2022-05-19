@@ -116,7 +116,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 	</div>
 	<?php } ?>
 
-	<div class="d-flex justify-content-end mt-4">
+	<div class="d-flex justify-content-end my-4">
 		<div class="btn-group xs-100">
 			<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn btn-primary">
 			<a href="<?php echo $list_href; ?>" class="btn btn-outline-primary">취소</a>

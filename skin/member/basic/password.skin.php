@@ -10,7 +10,7 @@ else $g5['title'] = $g5['title'];
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
 ?>
 
-<div class="form-password">
+<div class="password">
 	<form name="fboardpassword" action="<?php echo $action;  ?>" method="post">
 	<input type="hidden" name="w" value="<?php echo $w ?>">
 	<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -40,7 +40,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 				$content = '작성자와 관리자만 열람하실 수 있습니다.<br> 본인이라면 비밀번호를 입력하세요.';
 		}
 	?>	
-	<div class="alert alert-danger mb-4">
+	<div class="alert alert-danger mb-4" style="font-size:80%">
 		<h4 class="alert-heading"><?php echo $g5['title'] ?></h4>
 		<p class="mb-0"><?php echo $content ?></p>
 	</div>

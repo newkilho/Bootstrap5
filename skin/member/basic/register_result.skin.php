@@ -4,13 +4,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
 ?>
 
-<div class="form-signin">
+<div class="register">
 	<div class="text-center mb-5">
 		<a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>" class="logo"></a>
 	</div>
 
 	<p>
-        <strong><?php echo get_text($mb['mb_name']); ?></strong>님의 회원가입을 진심으로 축하합니다.
+        <strong><?php echo get_text($mb['mb_name']); ?></strong>님의 회원가입을 축하합니다.
     </p>
 
     <?php if (is_use_email_certify()) {  ?>

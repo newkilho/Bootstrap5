@@ -36,8 +36,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .anchor a { position: absolute; top: -60px }
 /* .pagination { margin-bottom: 0.75rem; } */
 
-.custom-checkbox { display: inline; }
-.custom-file-label:lang(ko)::after { content: "찾아보기"; }
+.table { table-layout: fixed; }
 
 .list-icon { width: 20px; height: 20px; vertical-align: text-bottom; }
 .view-icon { width: 48px; height: 48px; }
@@ -45,6 +44,8 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 
 @media (max-width: 575px)
 {
+	#captcha_audio {display:none !important;}
+
 	.xs-100 { width: 100%; }
 	.xs-full {
 		width: 100vw;

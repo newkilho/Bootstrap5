@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
 ?>
 
-<div class="form-signin">
+<div class="mb_login">
 <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
 
 	<div class="text-center mb-5">
@@ -28,7 +28,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 		<button class="btn btn-primary w-100 mb-4" type="submit">로그인</button>
 		<div class="text-center">
 			<a href="./register.php">회원 가입</a> |
-			<a href="<?php echo G5_BBS_URL ?>/password_lost.php" id="login_password_lost">암호를 분실하셨나요?</a>
+			<a href="<?php echo G5_BBS_URL ?>/password_lost.php">암호를 분실하셨나요?</a>
 		</div>
 	</div>
 

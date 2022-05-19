@@ -122,7 +122,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 
 					<?php if ($is_member) { // 임시 저장된 글 기능 ?>
 					<script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
 					<?php if($editor_content_js) echo $editor_content_js; ?>
-					<button type="button" id="btn_autosave" class="btn btn-outline-secondary" style="width:140px">임시저장 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
+					<button type="button" id="btn_autosave" class="btn btn-outline-primary" style="width:140px">임시저장 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
 					<?php } ?>
 				</div>
 
@@ -189,7 +189,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 
 	</div>
 	<?php } ?>
 
-	<div class="d-flex justify-content-end mt-4">
+	<div class="d-flex justify-content-end my-4">
 		<div class="btn-group xs-100">
 			<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn btn-primary">
 			<a href="<?php echo get_pretty_url($bo_table); ?>" class="btn btn-outline-primary">취소</a>

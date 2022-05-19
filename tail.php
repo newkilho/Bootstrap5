@@ -3,6 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
 {
+	case '/bbs/password_lost.php':
+	case '/bbs/member_cert_refresh.php':
 	case '/bbs/register.php':
 	case '/bbs/register_form.php':
 	case '/bbs/register_result.php':

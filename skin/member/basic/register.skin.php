@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
 ?>
 
-<div class="form-join">
+<div class="register">
 <form name="fregister" action="<?php echo $register_action_url ?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
 
 	<div class="text-center mb-5">
@@ -16,15 +16,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 	@include_once(get_social_skin_path().'/social_register.skin.php');
 	?>
 
-	<div class="mb-2">
-		<div class="form-check">
+	<div class="mb-4">
+		<div class="form-check mb-2">
 			<input type="checkbox" id="agree11" name="agree" value="1" class="form-check-input">
 			<label class="form-check-label" for="agree11">회원가입약관 동의</label>
 		</div>
 		<textarea class="form-control" rows="5" style="font-size: 0.8rem;"><?php echo get_text($config['cf_stipulation']) ?></textarea>
 	</div>
 	<div class="mb-4">
-		<div class="form-check">
+		<div class="form-check mb-2">
 			<input type="checkbox" id="agree21" name="agree2" value="1" class="form-check-input">
 			<label class="form-check-label" for="agree21">개인정보처리방침안내 동의</label>
 		</div>
