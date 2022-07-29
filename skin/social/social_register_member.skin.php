@@ -13,8 +13,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-defau
 add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
 
 $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.다른 이메일을 입력해 주세요.' : '';
-
-print_r($_REQUEST);
 ?>
 <div class="register">
 	<form name="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="POST" autocomplete="off">
@@ -32,15 +30,15 @@ print_r($_REQUEST);
 		<a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>" class="logo"></a>
 	</div>
 
-	<div class="mb-2">
-		<div class="form-check">
+	<div class="mb-4">
+		<div class="form-check mb-2">
 			<input type="checkbox" id="agree11" name="agree" value="1" class="form-check-input">
 			<label class="form-check-label" for="agree11">회원가입약관 동의</label>
 		</div>
 		<textarea class="form-control" rows="5" style="font-size: 0.8rem;"><?php echo get_text($config['cf_stipulation']) ?></textarea>
 	</div>
-	<div class="mb-2">
-		<div class="form-check">
+	<div class="mb-4">
+		<div class="form-check mb-2">
 			<input type="checkbox" id="agree21" name="agree2" value="1" class="form-check-input">
 			<label class="form-check-label" for="agree21">개인정보처리방침안내 동의</label>
 		</div>
@@ -48,7 +46,7 @@ print_r($_REQUEST);
 	</div>
 
 	<div class="form-group mb-4">
-		<label for="reg_mb_email">이메일</label>
+		<label for="reg_mb_email mb-2">이메일</label>
 		<input type="text" name="mb_email" value="<?php echo isset($user_email)?$user_email:''; ?>" id="reg_mb_email" required class="form-control email" maxlength="100" placeholder="이메일">
 	</div>
 
