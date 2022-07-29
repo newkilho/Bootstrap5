@@ -11,28 +11,31 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 		<a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.png" alt="<?php echo $config['cf_title']; ?>" class="logo"></a>
 	</div>
 
+	<div id="social">
 	<?php
 	// 소셜로그인 사용시 소셜로그인 버튼
 	@include_once(get_social_skin_path().'/social_register.skin.php');
 	?>
-
-	<div class="mb-4">
-		<div class="form-check mb-2">
-			<input type="checkbox" id="agree11" name="agree" value="1" class="form-check-input">
-			<label class="form-check-label" for="agree11">회원가입약관 동의</label>
-		</div>
-		<textarea class="form-control" rows="5" style="font-size: 0.8rem;"><?php echo get_text($config['cf_stipulation']) ?></textarea>
-	</div>
-	<div class="mb-4">
-		<div class="form-check mb-2">
-			<input type="checkbox" id="agree21" name="agree2" value="1" class="form-check-input">
-			<label class="form-check-label" for="agree21">개인정보처리방침안내 동의</label>
-		</div>
-		<textarea class="form-control" rows="5" style="font-size: 0.8rem;"><?php echo get_text($config['cf_privacy']) ?></textarea>
 	</div>
 
-	<input class="btn btn-primary w-100" type="submit" value="다음">
+	<div id="default">
+		<div class="mb-4">
+			<div class="form-check mb-2">
+				<input type="checkbox" id="agree11" name="agree" value="1" class="form-check-input">
+				<label class="form-check-label" for="agree11">회원가입약관 동의</label>
+			</div>
+			<textarea class="form-control" rows="5" style="font-size: 0.8rem;"><?php echo get_text($config['cf_stipulation']) ?></textarea>
+		</div>
+		<div class="mb-4">
+			<div class="form-check mb-2">
+				<input type="checkbox" id="agree21" name="agree2" value="1" class="form-check-input">
+				<label class="form-check-label" for="agree21">개인정보처리방침안내 동의</label>
+			</div>
+			<textarea class="form-control" rows="5" style="font-size: 0.8rem;"><?php echo get_text($config['cf_privacy']) ?></textarea>
+		</div>
 
+		<input class="btn btn-primary w-100" type="submit" value="다음">
+	</div>
 </form>
 </div>
 
