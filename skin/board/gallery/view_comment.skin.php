@@ -32,8 +32,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		</div>
 		<div class="d-flex mb-4">
 			<img class="comm-icon rounded me-3" src="<?php echo $mb_info['img'] ?>">
-			<div class="w-100">
-				<ul class="list-inline text-muted">
+			<div class="comm-body w-100">
+				<ul class="comm-name list-inline text-muted">
 					<li class="list-inline-item">
 						<a href="#" class="text-dark fw-bold" data-bs-toggle="dropdown"><?php echo get_text($list[$i]['wr_name']); ?></a>
 						<?php if ($is_ip_view) { ?>

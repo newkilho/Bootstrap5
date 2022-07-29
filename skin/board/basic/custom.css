@@ -41,6 +41,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .list-icon { width: 20px; height: 20px; vertical-align: text-bottom; }
 .view-icon { width: 48px; height: 48px; }
 .comm-icon { width: 48px; height: 48px; }
+.comm-body { background: #f4f4f4; padding: 20px; border-radius: 5px; }
 
 @media (max-width: 575px)
 {
@@ -57,5 +58,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 	.xs-full td	{ padding: 8px 18px; }
 
 	.list-icon { width: 18px; height: 18px; vertical-align: text-top; }
-	.comm-icon { width: 24px; height: 24px; }
+	.comm-icon { width: 24px; height: 24px; margin: 10px; position: absolute; }
+	.comm-body { padding: 10px; }
+	.comm-name { margin: 0 0 6px 30px; }
 }
