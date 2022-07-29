@@ -13,8 +13,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-defau
 add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
 
 $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.다른 이메일을 입력해 주세요.' : '';
+
+print_r($_REQUEST);
 ?>
-<div class="form-join">
+<div class="register">
 	<form name="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="POST" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="url" value="<?php echo $urlencode; ?>">

@@ -1,6 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+include G5_THEME_PATH.'/tail.php';  return;
+
 $admin = get_admin("super");
 ?>
 	<?php if($g5['sidebar']['right']) { ?>

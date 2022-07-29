@@ -3,11 +3,13 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // 테마 모양이 필요없는 팝업 등은 그누보드 원래 테마를 이용
+//echo substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH));
 switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
 {
 	case '/bbs/login.php': 
 	case '/bbs/password.php': 
-	case '/bbs/member_confirm.php': include_once(G5_THEME_PATH.'/head.def.php'); return; break;
+	case '/bbs/member_confirm.php': 
+		include_once(G5_THEME_PATH.'/head.def.php'); return; break;
 
 	case '/bbs/board.php': 
 	case '/bbs/write.php': return; break;

@@ -3,6 +3,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $q = isset($_GET['q']) ? clean_xss_tags($_GET['q'], 1, 1) : '';
 
+include G5_THEME_PATH.'/head.php';  return;
+
 include_once(G5_THEME_PATH.'/head.def.php');
 include_once(G5_LIB_PATH.'/latest.lib.php');
 include_once(G5_LIB_PATH.'/outlogin.lib.php');
@@ -47,10 +49,12 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 
 		<div class="collapse navbar-collapse" id="TopNavbar">
 			<ul class="navbar-nav mr-auto">
+				<!--
 				<?php if(defined('G5_COMMUNITY_USE') && G5_COMMUNITY_USE) { ?>
 				<li class="nav-item"><a href="<?php echo G5_URL ?>/" class="nav-link">커뮤니티</a></li>
 				<li class="nav-item"><a href="<?php echo G5_SHOP_URL ?>/" class="nav-link">쇼핑몰</a></li>
 				<?php } ?>
+				-->
 				<li class="nav-item"><a href="<?php echo G5_BBS_URL ?>/faq.php" class="nav-link">FAQ</a></li>
 				<li class="nav-item"><a href="<?php echo G5_BBS_URL ?>/qalist.php" class="nav-link">1:1문의</a></li>
 				<li class="nav-item"><a href="<?php echo G5_SHOP_URL ?>/personalpay.php" class="nav-link">개인결제</a></li>
@@ -58,63 +62,43 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 				<li class="nav-item"><a href="<?php echo G5_SHOP_URL ?>/itemqalist.php" class="nav-link">상품문의</a></li>
 				<li class="nav-item"><a href="<?php echo G5_SHOP_URL; ?>/couponzone.php" class="nav-link">쿠폰존</a></li>
 
-				<?php //echo get_layout_menu($menu_data) ?>
-				<?php echo outlogin('theme/basic') ?>
-			</ul>
-			<form action="<?php echo G5_BBS_URL ?>/search.php" method="get" class="form-inline my-2 my-lg-0 d-none d-lg-inline">
+				<?php //echo outlogin('theme/basic') ?>
+
+				<?php if ($is_member) {  ?>
+					<?php echo outlogin('theme/basic'); // 아웃로그인 ?>	
+				<li class="nav-item">
+					<a href="<?php echo G5_SHOP_URL; ?>/cart.php" class="nav-link">
+						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						<span class="count"><?php echo get_boxcart_datas_count(); ?></span>
+					</a>
+				</li>
+				<?php } else { ?>
+				<li class="login"><a href="<?php echo G5_BBS_URL ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
+				<?php }  ?>
+
+				<!--
+				<li class="nav-item">
+					<a type="button" class="btn btn-primary position-relative">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span class="visually-hidden">unread messages</span>
+					</span>
+					</a>
+				</li>
+				-->
+			<li class="nav-item">
+			<form action="<?php echo G5_SHOP_URL ?>/search.php" method="get">
 				<input type="hidden" name="sfl" value="wr_subject||wr_content">
 				<input type="hidden" name="sop" value="and">
-
-				<input type="search" name="stx" value="<?=$stx?>" class="form-control mr-sm-2" placeholder="Search" aria-label="Search">
-				<button type="submit" class="btn btn-secondary my-2 my-sm-0">Search</button>
+				<div class="input-group mt-2 mb-1 my-md-0">
+					<input class="form-control" type="search" name="q" value="<?=$q?>" placeholder="검색어" aria-label="Search">
+					<button class="btn btn-secondary" type="submit">검색</button>
+				</div>
 			</form>
+			</li>
+			</ul>
 		</div>
 	</div>
 </nav>
-
-		</div>
-	</div>
-    <div id="hd_wrapper">
-        <div id="logo">
-        	<a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a>
-        </div>
-		
-		<div class="hd_sch_wr">
-	        <fieldset id="hd_sch">
-	            <legend>쇼핑몰 전체검색</legend>
-	            <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
-	            <label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-	            <input type="text" name="q" value="<?php echo stripslashes(get_text(get_search_string($q))); ?>" id="sch_str" required placeholder="검색어를 입력해주세요">
-	            <button type="submit" id="sch_submit" value="검색"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-	            </form>
-	            <script>
-	            function search_submit(f) {
-	                if (f.q.value.length < 2) {
-	                    alert("검색어는 두글자 이상 입력하십시오.");
-	                    f.q.select();
-	                    f.q.focus();
-	                    return false;
-	                }
-	                return true;
-	            }
-	            </script>
-	        </fieldset>
-		</div>
-        <!-- 쇼핑몰 배너 시작 { -->
-        <?php // echo display_banner('왼쪽'); ?>
-        <!-- } 쇼핑몰 배너 끝 -->
-        
-        <ul class="hd_login">        
-            <?php if ($is_member) {  ?>
-			<li class="shop_login">
-				<?php echo outlogin('theme/shop_basic'); // 아웃로그인 ?>	
-			</li>
-			<li class="shop_cart"><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="sound_only">장바구니</span><span class="count"><?php echo get_boxcart_datas_count(); ?></span></a></li>
-            <?php } else { ?>
-            <li class="login"><a href="<?php echo G5_BBS_URL ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
-            <?php }  ?>
-        </ul>
-    </div>
 
     <div id="hd_menu">
     	<button type="button" id="menu_open"><i class="fa fa-bars" aria-hidden="true"></i> 카테고리</button>
@@ -127,7 +111,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
             <li><a href="<?php echo shop_type_url(5); ?>">할인상품</a></li>
         </ul>
     </div> 
-</div>
+
 <!-- } 상단 끝 -->
         
 <div id="side_menu">
@@ -141,7 +125,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
     <div id="tabs_con">
 	    <div class="side_mn_wr1 qk_con">
 	    	<div class="qk_con_wr">
-	    		<?php echo outlogin('theme/shop_side'); // 아웃로그인 ?>
 		        <ul class="side_tnb">
 		        	<?php if ($is_member) { ?>
 					<li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>

@@ -28,6 +28,7 @@ $menu_data = get_menu_db(0, true);
 get_active_menu($menu_data);
 
 $g5['sidebar']['right'] = !defined('_INDEX_')&&is_file(G5_PATH.'/sidebar.right.php') ? true : false;
+  if($_SERVER['REMOTE_ADDR'] == '175.209.241.56') $g5['sidebar']['right'] = false;
 
 if(defined('_INDEX_')) include G5_THEME_PATH.'/newwin.inc.php';
 ?>
