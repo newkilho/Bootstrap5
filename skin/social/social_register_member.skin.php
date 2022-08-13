@@ -46,9 +46,17 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
 	</div>
 
 	<div class="form-group mb-4">
-		<label for="reg_mb_email mb-2">이메일</label>
+		<label for="reg_mb_email">이메일</label>
 		<input type="text" name="mb_email" value="<?php echo isset($user_email)?$user_email:''; ?>" id="reg_mb_email" required class="form-control email" maxlength="100" placeholder="이메일">
 	</div>
+
+	<?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
+	<div class="mb-4">
+		<label for="reg_mb_hp">휴대폰번호</label>
+		
+		<input type="text" name="mb_hp" value="" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="form-control" maxlength="20" placeholder="휴대폰번호">
+	</div>
+	<?php }  ?>
 
 	<input class="btn btn-primary w-100 mb-2" type="submit" value="다음">
 	</form>

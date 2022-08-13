@@ -2,6 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
+
+if(!is_use_email_certify()) goto_url(G5_URL);
 ?>
 
 <div class="register">
