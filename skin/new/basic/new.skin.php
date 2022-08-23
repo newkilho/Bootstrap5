@@ -62,7 +62,7 @@ $write_pages = chg_paging($write_pages);
 
 	<h2 class="font-weight-normal pt-3 mb-4"><strong class="font-weight-extra-bold">최신글</strong></h2>
 
-	<table class="table xs-full"> <!-- table-striped table-hover  -->
+	<table class="table xs-full mb-4"> <!-- table-striped table-hover  -->
 		<thead>
 			<tr class="d-none d-md-table-row">
 				<?php if($is_admin) { ?>
@@ -97,7 +97,7 @@ $write_pages = chg_paging($write_pages);
 				<td class="d-none d-md-table-cell"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>" class="text-dark"><?php echo $gr_subject ?></a></td>
 				-->
 				<td class="d-none d-md-table-cell"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>" class="text-dark"><?php echo $bo_subject ?></a></td>
-				<td>
+				<td class="text-truncate">
 					<a href="<?php echo $list[$i]['href'] ?>" class="text-dark"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a>
 					<!-- 모바일 -->
 					<ul class="list-inline small text-muted mt-1 mb-0 d-md-none">
@@ -123,12 +123,14 @@ $write_pages = chg_paging($write_pages);
 		</tbody>
 	</table>
 
-	<div class="pt-3 d-flex justify-content-center justify-content-sm-end">
+	<?php if ($write_pages) { ?>
+	<div class="d-flex justify-content-center justify-content-sm-end mb-4">
 		<?php echo $write_pages ?>
 	</div>
+	<?php } ?>
 
 	<?php if ($is_admin) { ?>
-	<div class="d-flex justify-content-end mb-2">
+	<div class="d-flex justify-content-end mb-4">
 		<div class="btn-group xs-100">
 			<button type="submit" name="btn_submit" title="선택삭제" onclick="document.pressed=this.title" class="btn btn-danger"><i class="fas fa-trash-alt"></i> 삭제</button>
 		</div>

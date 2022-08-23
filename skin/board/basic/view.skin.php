@@ -9,7 +9,6 @@ if (strstr($sfl, 'content'))
     $view['content'] = search_font($stx, $view['content']);
 
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
-//print_r($view);
 ?>
 
 <? if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
@@ -40,24 +39,41 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		</div>
 	</div>
 
-	<div id="bo_v_con" class="mb-2">
+	<?php
+	$attach = '';
+
+	for ($i=1; $i<10; $i++)
+		if($board['bo_'.$i.'_subj'] && $write['wr_'.$i])
+			$attach .= '
+	<tr>
+		<th style="width: 6rem;">'.$board['bo_'.$i.'_subj'].'</th>
+		<td>'.$write['wr_'.$i].'</td>
+	</tr>
+			';
+
+	if($attach) echo '<table class="table mb-4"><tbody>'.$attach.'</tbody></table>';
+	?>
+
+	<div id="bo_v_con" class="mb-4">
 		<?php
 		// 파일 출력
 		for ($i=0; $i<=count($view['file']); $i++)
 			if ($view['file'][$i]['view'])
-				echo '<img class="img-fluid" src="'.$view['file'][$i]['path'].'/'.$view['file'][$i]['file'].'">';
+				echo '<img class="img-fluid d-block" src="'.$view['file'][$i]['path'].'/'.$view['file'][$i]['file'].'">';
 
 		// 본문 내용
-		echo str_replace('<img ', '<img class="img-fluid" ', $view['content']);
+		echo str_replace('<img ', '<img class="img-fluid d-block" ', $view['content']);
 		?>
 	</div>
 
-	<div class="mb-2">
-		<?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
+	<?php if ($is_signature) { ?>
+	<div class="mb-4">
+		<p><?php echo $signature ?></p>
 	</div>
+	<?php } ?>
 
 	<?php if($board['bo_use_good'] || $board['bo_use_nogood']) { ?>
-	<div class="mb-2 pt-5 text-center">
+	<div class="mb-4 pt-4 text-center">
 		<?php if($board['bo_use_good']) { ?>
 		<a href="<?php echo $good_href?>" id="good_button" class="btn btn-outline-primary <?php if(!$good_href) echo 'disabled'; ?>"><i class="fa fa-thumbs-up"></i> <strong><?php echo number_format($view['wr_good']); ?></strong></a>
 		<b id="bo_v_act_good"></b>
@@ -69,58 +85,32 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 	</div>
 	<?php } ?>
 
-	<ul class="list-group mb-4">
-		<!-- 첨부파일 -->
-		<?php
-		$cnt = 0;
-		if ($view['file']['count'])
-			for ($i=0; $i<count($view['file']); $i++)
-				if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) $cnt++;
+	<?php
+	$attach = '';
 
-		if($cnt)
-		{
-			// 가변 파일
-			for ($i=0; $i<count($view['file']); $i++)
-			{
-				if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
-				{
-		?>
-		<li class="list-group-item">
-			<small class="text-muted"><i class="fa fa-download"></i></small>
-			<a href="<?php echo $view['file'][$i]['href'];  ?>" class="text-dark"><?php echo $view['file'][$i]['source'] ?></a>
-			<?php echo $view['file'][$i]['content'] ?> <small class="text-muted">(<?php echo $view['file'][$i]['size'] ?>)</small>
-			<!--<span class="badge badge-light badge-pill float-end"><?php echo $view['file'][$i]['download'] ?> 회</span>-->
-			<small class="float-end text-muted"><?php echo $view['file'][$i]['download'] ?> 회</small>
-		</li>
-		<?php
-				}
-			}
-		}
-		?>
+	// 첨부파일
+	if ($view['file']['count'])
+		for ($i=0; $i<count($view['file']); $i++)
+			if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+				$attach .= '
+	<li class="list-group-item">
+		<small class="text-muted"><i class="fa fa-download"></i></small>
+		<a href="'.$view['file'][$i]['href'].'" class="text-dark">'.$view['file'][$i]['source'].'</a>'.$view['file'][$i]['content'].' <small class="text-muted">('.$view['file'][$i]['size'].')</small>
+		<small class="float-end text-muted">'.$view['file'][$i]['download'].' 회</small>
+	</li>';
 
-		<!-- 관련링크 -->
-		<?php 
-		if(isset($view['link'][1]) && $view['link'][1])
-		{
-			$cnt = 0;
-			for ($i=1; $i<=count($view['link']); $i++)
-			{
-				if ($view['link'][$i])
-				{
-					$cnt++;
-					$link = cut_str($view['link'][$i], 70);
-		?>
-		<li class="list-group-item">
-			<small class="text-muted"><i class="fa fa-link"></i></small>
-			<a href="<?php echo $view['link_href'][$i] ?>" class="text-dark" target="_blank"><?php echo $link ?></a>
-			<small class="float-end text-muted"><?php echo $view['link_hit'][$i] ?> 회</small>
-		</li>
-		<?php
-				}
-			}
-		} 
-		?>
-	</ul>
+	// 관련링크
+	for ($i=1; $i<=count($view['link']); $i++)
+		if ($view['link'][$i])
+			$attach .= '
+	<li class="list-group-item">
+		<small class="text-muted"><i class="fa fa-link"></i></small>
+		<a href="'.$view['link_href'][$i].'" class="text-dark" target="_blank">'.cut_str($view['link'][$i], 70).'</a>
+		<small class="float-end text-muted">'.$view['link_hit'][$i].' 회</small>
+	</li>';
+
+	if ($attach) echo '<ul class="list-group mb-4">'.$attach.'</ul>';
+	?>
 
 	<?php include_once(G5_THEME_PATH."/skin/sns/view.sns.skin.php"); ?>
 

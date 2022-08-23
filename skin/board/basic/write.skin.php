@@ -135,6 +135,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 
 		</div>        
 	</div>
 
+	<?php for ($i=1; $i<10; $i++) if($board['bo_'.$i.'_subj']) { ?>
+	<div class="row mb-2">
+		<label class="col-sm-2 col-form-label"><?php echo $board['bo_'.$i.'_subj']; ?></label>
+		<div class="col-sm-10">
+			<input class="form-control" type="text" name="wr_<?php echo $i ?>" value="<?php echo ($w=='u' ? $write['wr_'.$i] : $board['bo_'.$i]); ?>" id="wr_<?php echo $i ?>">
+		</div>
+	</div>
+	<?php } ?>
+
 	<div class="row mb-2">
 		<label class="col-sm-2 col-form-label">내용</label>
 		<div class="wr_content col-sm-10 <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">

@@ -12,7 +12,7 @@ function get_active_menu($menu_datas)
 		$self['path'] = $part['path'].'/';
 
 		if($item['me_code'] == $g5['me_code'] || 
-			(!$g5['me_code'] && !in_array($item['path'], array('', '/')) && strncmp($item['path'], $self['path'], strlen($item['path']))===0))
+		  (!$g5['me_code'] && !in_array($item['path'], array('', '/')) && strncmp($item['path'], $self['path'], strlen($item['path']))===0))
 		{
 			//echo $item['me_code'].' - '.$g5['me_code'].'<br />';
 			//echo $item['path'].' - '.$self['path'].'<br />';
@@ -105,11 +105,6 @@ function get_member_info($mb_id, $name='', $email='', $homepage='')
 
 		if(file_exists(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_icon_img))
 			$mb_img_url = G5_DATA_URL.'/member_image/'.substr($mb_id,0,2).'/'.$mb_icon_img;
-
-		/*
-        if ($config['cf_use_member_icon']) {
-                if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-		*/
 	} else {
 		if(!$bo_table)
 		  return array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'menu'=>'');

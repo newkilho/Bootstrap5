@@ -58,7 +58,7 @@ $write_pages = chg_paging($write_pages);
 					<?php if($list[$i]['icon_new']) { ?>
 					<div class="corner-ribbon shadow">NEW</div>
 					<?php } ?>
-					<a href="<?php echo $list[$i]['href'] ?>"><img src="<?php echo $thumb['src'] ?>" class="card-img-top"></a>
+					<a href="<?php echo $list[$i]['href'] ?>" class="w-100"><img src="<?php echo $thumb['src'] ?>" class="card-img-top"></a>
 				</div>
 				<div class="card-body">
 					<div class="card-title text-truncate">
