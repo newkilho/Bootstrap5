@@ -11,9 +11,9 @@ if (strstr($sfl, 'content'))
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
 ?>
 
-<? if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
+<?php if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
 <div class="mb-4"><?=$g5['ads']?></div>
-<? } ?>
+<?php } ?>
 
 <div>
 
@@ -143,9 +143,9 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 	</ul>
 	<?php } ?>
 
-	<? if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
+	<?php if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
 	<div class="mb-4"><?=$g5['ads']?></div>
-	<? } ?>
+	<?php } ?>
 
 	<?php
 	// 코멘트 입출력

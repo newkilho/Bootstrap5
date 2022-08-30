@@ -46,7 +46,7 @@ $write_pages = chg_paging($write_pages);
 	<input type="hidden" name="sw" value="">
 
 	<div class="row">
-	<?
+	<?php
 		for ($i=0; $i<count($list); $i++) 
 		{	
 			$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']); 

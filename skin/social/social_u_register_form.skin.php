@@ -17,7 +17,7 @@ add_stylesheet('<style>.sns-icon-not { -webkit-filter: grayscale(100%); filter: 
 	<div class="sns-wrap">
 		<?php foreach( $socials as $social=>$provider_name ){ if(!option_array_checked($social, $config['cf_social_servicelist'])) continue; ?>
 
-		<?
+		<?php
 			$social_nonce = social_nonce_create($social, $session_id);
 			$add_class = $title = '';
 			if( in_array($social, $my_provides) ){

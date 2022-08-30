@@ -87,7 +87,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 <div class="d-flex justify-content-center justify-content-sm-end mb-4">
 	<?php echo $list_pages;  ?>
 </div>
-<? } ?>
+<?php } ?>
 
 <div class="d-flex flex-sm-row flex-column justify-content-sm-between mb-4">
 	<div class="d-flex justify-content-center mb-2 mb-sm-0">

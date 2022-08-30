@@ -36,4 +36,4 @@ add_stylesheet('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqclou
 	var words = <?php echo json_encode($words); ?>;
 	$("#popular").jQCloud(words, { autoResize: true });
 </script>
-<? } ?>
+<?php } ?>
