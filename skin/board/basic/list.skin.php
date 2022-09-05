@@ -130,7 +130,7 @@ $write_pages = chg_paging($write_pages);
 				<td class="d-none d-md-table-cell">
 					<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> 
 					<div class="dropdown d-inline">
-						<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($list[$i]['wr_name']); ?></a>
+						<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo cut_str(get_text($list[$i]['wr_name']), 8); ?></a>
 						<?php echo $mb_info['menu'] ?>
 					</div>
 				</td>
