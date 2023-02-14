@@ -11,7 +11,7 @@ if (strstr($sfl, 'content'))
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
 ?>
 
-<?php if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
+<?php if(isset($g5['ads']) && $g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
 <div class="mb-4"><?=$g5['ads']?></div>
 <?php } ?>
 
@@ -58,7 +58,7 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		<?php
 		// 파일 출력
 		for ($i=0; $i<=count($view['file']); $i++)
-			if ($view['file'][$i]['view'])
+			if (isset($view['file'][$i]['view']) && $view['file'][$i]['view'])
 				echo '<img class="img-fluid d-block" src="'.$view['file'][$i]['path'].'/'.$view['file'][$i]['file'].'">';
 
 		// 본문 내용
@@ -143,7 +143,7 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 	</ul>
 	<?php } ?>
 
-	<?php if($g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
+	<?php if(isset($g5['ads']) && $g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
 	<div class="mb-4"><?=$g5['ads']?></div>
 	<?php } ?>
 

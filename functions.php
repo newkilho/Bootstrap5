@@ -95,6 +95,8 @@ function get_member_info($mb_id, $name='', $email='', $homepage='')
     $email    = get_text($email);
     $homepage = get_text($homepage);
 
+	$menu = '';
+
 	$mb_ico_url = G5_IMG_URL.'/no_profile.gif';
 	$mb_img_url = G5_IMG_URL.'/no_profile.gif';
 

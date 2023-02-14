@@ -106,10 +106,10 @@ $write_pages = chg_paging($write_pages);
 					<span class="d-none d-md-inline-block badge bg-secondary"><?php echo $list[$i]['wr_comment']; ?></span>
 					<?php } ?>
 					<?php
-					if($list[$i]['icon_file']) echo ' <small class="text-muted"><i class="fa fa-download"></i></small>';
-					if($list[$i]['icon_link']) echo ' <small class="text-muted"><i class="fa fa-link"></i></small>';
 					if($list[$i]['icon_new']) echo ' <span class="badge bg-danger"><i class="fa fa-bell"></i></span>';
-					if($list[$i]['icon_hot']) echo ' <span class="badge bg-danger"><i class="fa fa-fire"></i></span>';
+					if(isset($list[$i]['icon_hot'])) echo ' <span class="badge bg-danger"><i class="fa fa-fire"></i></span>';
+					if(isset($list[$i]['icon_file'])) echo ' <small class="text-muted"><i class="fa fa-download"></i></small>';
+					if(isset($list[$i]['icon_link'])) echo ' <small class="text-muted"><i class="fa fa-link"></i></small>';
 					?>
 					<!-- 모바일 -->
 					<ul class="list-inline small text-muted mt-1 mb-0 d-md-none">
@@ -130,7 +130,7 @@ $write_pages = chg_paging($write_pages);
 				<td class="d-none d-md-table-cell">
 					<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> 
 					<div class="dropdown d-inline">
-						<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo cut_str(get_text($list[$i]['wr_name']), 8); ?></a>
+						<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($list[$i]['wr_name']); ?></a>
 						<?php echo $mb_info['menu'] ?>
 					</div>
 				</td>
