@@ -34,11 +34,7 @@ if(defined('_INDEX_')) include G5_THEME_PATH.'/newwin.inc.php';
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#TopNavbar" aria-controls="TopNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="TopNavbar">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<?php 
-				$menu_data = get_menu_db(0, true);
-				get_active_menu($menu_data);
-				echo get_layout_menu($menu_data) 
-				?>
+				<?php echo get_layout_menu(get_menu_db(0, true)) ?>
 				<?php echo outlogin('theme/basic') ?>
 			</ul>
 			<form action="<?php echo G5_BBS_URL ?>/search.php" method="get">

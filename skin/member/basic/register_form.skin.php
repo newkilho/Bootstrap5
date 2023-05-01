@@ -205,7 +205,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 
 		<?php if ($config['cf_use_hp']) {  ?>
 		<div class="form-check mb-2">
-			<input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
+			<input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" class="form-check-input" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
 			<label class="form-check-label" for="reg_mb_sms">휴대폰 문자메세지를 받겠습니다.</label>
 		</div>
 		<?php }  ?>

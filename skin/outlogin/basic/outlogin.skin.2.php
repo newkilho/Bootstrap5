@@ -6,6 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $nick ?> 님</a>
 	<div class="dropdown-menu"><!-- dropdown-menu-right -->
 		<a class="dropdown-item win_point" href="<?php echo G5_BBS_URL ?>/point.php" target="_blank">포인트 (<?php echo $point ?>)</a>
+		<a class="dropdown-item win_memo" href="<?php echo G5_BBS_URL ?>/memo.php" target="_blank">쪽지 (<?php echo $memo_not_read; ?>)</a>
 		<a class="dropdown-item win_scrap" href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank">스크랩</a>
 		<a class="dropdown-item" href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a>
 		<a class="dropdown-item" href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a>

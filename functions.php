@@ -1,71 +1,80 @@
 <?php
-function get_active_menu($menu_datas)
+function is_active_menu($item)
 {
 	global $g5;
 
-	foreach($menu_datas as $item)
+	$part = parse_url($item['me_link']);
+	$item['path'] = (isset($part['path']) ? $part['path'] : '').'/';
+
+	$part = parse_url($_SERVER['REQUEST_URI']);
+	$self['path'] = (isset($part['path']) ? $part['path'] : '').'/';
+
+	if(isset($g5['me_code']))
 	{
-		$part = parse_url($item['me_link']);
-		$item['path'] = $part['path'].'/';
-
-		$part = parse_url($_SERVER['REQUEST_URI']);
-		$self['path'] = $part['path'].'/';
-
-		if((isset($g5['me_code']) && $item['me_code'] == $g5['me_code']) || 
-		  //(!$g5['me_code'] && !in_array($item['path'], array('', '/')) && strncmp($item['path'], $self['path'], strlen($item['path']))===0))
-		  (!isset($g5['me_code']) && !in_array($item['path'], array('', '/')) && strncmp($item['path'], $self['path'], strlen($item['path']))===0))
-		{
-			//echo $item['me_code'].' - '.$g5['me_code'].'<br />';
-			//echo $item['path'].' - '.$self['path'].'<br />';
-			//echo $item['path'] .' - '. strncmp($item['path'], $self['path'], strlen($item['path']));
-			$g5['me_code'] = $item['me_code'];
-		}
-
-		if($item['sub']) get_active_menu($item['sub']);
+		if($item['me_code'] == $g5['me_code']) return true;
+	}else{
+		if(!in_array($item['path'], array('', '/')) && strncmp($item['path'], $self['path'], strlen($item['path']))===0) return true;
 	}
+
+	return false;
 }
 
-function get_layout_menu($menu_datas)
+function get_layout_menu($menu)
 {
 	global $g5;
 
-	$output = '';
-	foreach($menu_datas as $item)
+	$html = '';
+
+	foreach($menu as $item)
 	{
-		//$item['active'] = $item['me_code'] == (isset($g5['me_code']) && substr($g5['me_code'], 0, strlen($item['me_code']))) ? 'active' : '';
-		$item['active'] = isset($g5['me_code']) && ($item['me_code'] == substr($g5['me_code'], 0, strlen($item['me_code']))) ? 'active' : '';
+		$item['html'] = '';
+		$item['active'] = is_active_menu($item) ? 'active' : '';
 
-		if(!$item['sub'])
+		if(isset($item['sub']) && $item['sub'])
 		{
-			$output .= '<li class="nav-item"><a href="'.$item['me_link'].'" target="_'.$item['me_target'].'" class="nav-link '.$item['active'].'">'.$item['me_name'].'</a></li>';
-		}
-		else
-		{
-			$output .= '<li class="nav-item dropdown"><a href="'.$item['me_link'].'" target="_'.$item['me_target'].'" class="nav-link dropdown-toggle '.$item['active'].'" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$item['me_name'].'</a><div class="dropdown-menu">';
+			$item['html'] .= '<div class="dropdown-menu">';
 
-			foreach($item['sub'] as $item2)
+			foreach($item['sub'] as $href)
 			{
-				$item2['active'] = $item2['me_code'] == substr($g5['me_code'], 0, strlen($item2['me_code'])) ? 'active' : '';
+				//$href['active'] = is_active_menu($href) ? 'active' : '';
+				if(is_active_menu($href))
+				{
+					$href['active'] = $item['active'] = 'active';
 
-				if($item2['me_id']==-1)
-					$output .= '<div class="dropdown-divider"></div>';
+				}else{
+					$href['active'] = '';
+				}
+
+				if($href['me_id']==-1)
+					$item['html'] .= '<div class="dropdown-divider"></div>';
 				else
-					$output .= '<a href="'.$item2['me_link'].'" class="dropdown-item '.$item2['active'].'">'.$item2['me_name'].'</a>';
+					$item['html'] .= '<a href="'.$href['me_link'].'" target="_'.$href['me_target'].'" class="dropdown-item '.$href['active'].'">'.$href['me_name'].'</a>';
 			}
-			
-			$output .= '</div></li>';
+
+			$item['html'] .= '</div>';
 		}
+
+		$html .= sprintf('<li class="nav-item %5$s"><a href="%1$s" target="_%2$s" class="nav-link %4$s %6$s" %7$s>%3$s</a>%8$s</li>', 
+			$item['me_link'], 
+			$item['me_target'], 
+			$item['me_name'],
+			$item['active'],
+			$item['html'] ? 'dropdown' : '',
+			$item['html'] ? 'dropdown-toggle' : '', 
+			$item['html'] ? 'data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"' : '',
+			$item['html']
+		);
 	}
 
-	return $output;
+	return $html;
 }
 
-function get_layout_breadcrumb($menu_datas, $recursive=false)
+function get_layout_breadcrumb($menu, $recursive=false)
 {
 	global $g5;
 
 	$output = '';
-	foreach($menu_datas as $item)
+	foreach($menu as $item)
 	{
 		if($item['me_code'] == substr($g5['me_code'], 0, strlen($item['me_code'])))
 			if($item['me_code'] != $g5['me_code'])

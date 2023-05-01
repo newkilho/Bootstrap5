@@ -31,11 +31,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 	}
 
 	if ($is_email) {
-		$option .= '<div class="form-check form-check-inline"><input type="checkbox" id="qa_email_recv" name="qa_email_recv" value="1" class="form-check-input"'.($write['qa_email_recv'] ? ' checked="checked"':'').'><label class="form-check-label" for="qa_email_recv">답변메일</label></div>';
+		$option .= '<div class="form-check form-check-inline"><input type="checkbox" id="qa_email_recv" name="qa_email_recv" value="1" class="form-check-input"'.(isset($write['qa_email_recv']) && $write['qa_email_recv'] ? ' checked="checked"':'').'><label class="form-check-label" for="qa_email_recv">답변메일</label></div>';
 	}
 
 	if ($is_hp&&$qaconfig['qa_use_sms']) {
-		$option .= '<div class="form-check form-check-inline"><input type="checkbox" id="qa_sms_recv" name="qa_sms_recv" value="1" class="form-check-input"'.($write['qa_sms_recv'] ? ' checked="checked"':'').'><label class="form-check-label" for="qa_sms_recv">답변문자</label></div>';
+		$option .= '<div class="form-check form-check-inline"><input type="checkbox" id="qa_sms_recv" name="qa_sms_recv" value="1" class="form-check-input"'.(isset($write['qa_sms_recv']) && $write['qa_sms_recv'] ? ' checked="checked"':'').'><label class="form-check-label" for="qa_sms_recv">답변문자</label></div>';
 	}
 
 	echo $option_hidden;

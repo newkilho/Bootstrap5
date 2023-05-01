@@ -20,4 +20,3 @@ if(is_file(G5_PATH.'/main.php'))
 }
 
 include_once(G5_THEME_PATH.'/tail.php');
-?>

@@ -90,7 +90,7 @@ $write_pages = chg_paging($write_pages);
 					<?php echo $list[$i]['num'] ?>
 					<?php } ?>
 				</td>
-				<td class="text-truncate">
+				<td>
 					<?php if($is_category && $list[$i]['ca_name']) { ?>
 					<a href="<?php echo $list[$i]['ca_name_href'] ?>" class="badge bg-primary"><?php echo $list[$i]['ca_name'] ?></a>
 					<?php } ?>

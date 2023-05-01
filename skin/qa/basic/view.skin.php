@@ -87,8 +87,8 @@ $mb_info = get_member_info($view['mb_id'], $view['qa_name'], $view['qa_email']);
 	<?php if ($prev_href || $next_href) { ?>
 	<div>
 	<ul class="list-group mb-4">
-		<?php if ($prev_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-up"></i> 이전글</small> <a href="<?php echo $prev_href ?>" class="text-dark"><?php echo $prev_qa_subject;?></a> <small class="float-right text-muted"><?php echo str_replace('-', '.', substr($prev_wr_date, '2', '8')); ?></small></li><?php } ?>
-		<?php if ($next_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-down"></i> 다음글</small> <a href="<?php echo $next_href ?>" class="text-dark"><?php echo $next_qa_subject;?></a> <small class="float-right text-muted"><?php echo str_replace('-', '.', substr($next_wr_date, '2', '8')); ?></small></li><?php } ?>
+		<?php if ($prev_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-up"></i> 이전글</small> <a href="<?php echo $prev_href ?>" class="text-dark"><?php echo $prev_qa_subject;?></a></li><?php } ?>
+		<?php if ($next_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-down"></i> 다음글</small> <a href="<?php echo $next_href ?>" class="text-dark"><?php echo $next_qa_subject;?></a></li><?php } ?>
 	</ul>
 	</div>
 	<?php } ?>

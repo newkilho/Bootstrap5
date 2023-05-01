@@ -11,21 +11,21 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 <ol class="list-unstyled">
     <?php
     $cmt_amt = count($list);
+	$cmt_depth = $cmt_depth_old = 0;
     for ($i=0; $i<$cmt_amt; $i++) {
         $comment_id = $list[$i]['wr_id'];
-		$comment_depth = strlen($list[$i]['wr_comment_reply']);
-        $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 50;
+		$cmt_depth = strlen($list[$i]['wr_comment_reply']);
         $comment = $list[$i]['content'];
 
 		$comment = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $comment);
 
-		if($comment_depth > $comment_depth_old) echo '<ol class="list-unstyled ps-3 ps-lg-4">';
-		if($comment_depth < $comment_depth_old) for($j=$comment_depth; $j<$comment_depth_old; $j++) echo '</ol>';
+		if($cmt_depth > $cmt_depth_old) echo '<ol class="list-unstyled ps-3 ps-lg-4">';
+		if($cmt_depth < $cmt_depth_old) for($j=$cmt_depth; $j<$cmt_depth_old; $j++) echo '</ol>';
 
 		$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
 
 		$list[$i]['datetime'] = substr($list[$i]['wr_datetime'],0,10) == G5_TIME_YMD ? substr($list[$i]['wr_datetime'], 11, 8) : substr($list[$i]['wr_datetime'], 2, 8);
-     ?>
+	?>
 	<li class="mb-4">
 		<div class="anchor">
 			<a name="c_<?php echo $comment_id ?>"></a>
@@ -65,10 +65,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		</div>
 	</li>
 	<?php 
-		$comment_depth_old = $comment_depth;
+		$cmt_depth_old = $cmt_depth;
 	 } 
 
-	for($j=1; $j<$comment_depth; $j++) echo '</ol>';
+	for($j=1; $j<$cmt_depth; $j++) echo '</ol>';
 	?>
 </ol>
 

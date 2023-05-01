@@ -45,9 +45,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$faq_skin_url.'/custom.css">', 0)
 		<div class="card">
 			<div class="card-header">
 				<h5 class="mb-0">
-					<button class="btn text-dark p-0" data-bs-toggle="collapse" data-bs-target="#collapse_<?php echo $i ?>" aria-expanded="true" aria-controls="collapse_<?php echo $i ?>">
-						<?php echo conv_content($v['fa_subject'], 1); ?>
-					</button>
+					<button class="btn text-dark p-0" data-bs-toggle="collapse" data-bs-target="#collapse_<?php echo $i ?>" aria-expanded="true" aria-controls="collapse_<?php echo $i ?>"><?php echo conv_content($v['fa_subject'], 1); ?></button>
 				</h5>
 			</div>
 			<div id="collapse_<?php echo $i ?>" class="collapse <?php if($i==1) echo 'show'; ?>" data-bs-parent="#faq">
