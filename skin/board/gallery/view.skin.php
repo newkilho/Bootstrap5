@@ -11,10 +11,6 @@ if (strstr($sfl, 'content'))
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
 ?>
 
-<?php if(isset($g5['ads']) && $g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
-<div class="mb-4"><?=$g5['ads']?></div>
-<?php } ?>
-
 <div>
 
 	<blockquote><h3><?php echo cut_str(get_text($view['wr_subject']), 70); ?></h3></blockquote>
@@ -141,10 +137,6 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		<?php if ($prev_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-up"></i><span class="d-none d-md-inline"> 이전글</span></small> <a href="<?php echo $prev_href ?>" class="text-dark"><?php echo $prev_wr_subject;?></a> <small class="float-end text-muted d-none d-md-inline"><?php echo str_replace('-', '.', substr($prev_wr_date, '2', '8')); ?></small></li><?php } ?>
 		<?php if ($next_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-down"></i><span class="d-none d-md-inline"> 다음글</span></small> <a href="<?php echo $next_href ?>" class="text-dark"><?php echo $next_wr_subject;?></a> <small class="float-end text-muted d-none d-md-inline"><?php echo str_replace('-', '.', substr($next_wr_date, '2', '8')); ?></small></li><?php } ?>
 	</ul>
-	<?php } ?>
-
-	<?php if(isset($g5['ads']) && $g5['ads'] && strpos($view['wr_option'], 'secret')===false) { ?>
-	<div class="mb-4"><?=$g5['ads']?></div>
 	<?php } ?>
 
 	<?php
