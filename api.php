@@ -9,7 +9,7 @@
 		case 'report':
 			$sql = " select * from {$g5['board_table']}_report where bo_table='{$data['bo_table']}' and wr_id='{$data['wr_id']}' and mb_id='{$member['mb_id']}' limit 1; ";
 			$row = sql_fetch($sql);
-			if($row['si_id'])
+			if(!empty($row) && $row['si_id'])
 			{
 				$msg = '신고한 게시물입니다.';
 			}else{
@@ -35,7 +35,7 @@
 
 			$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' and bl_send_mb_id = '{$data['mb_id']}' limit 1; ";
 			$row = sql_fetch($sql);
-			if($row['bl_id'])
+			if(!empty($row) && $row['bl_id'])
 			{
 				$msg = '차단된 회원입니다.';
 			}else{
