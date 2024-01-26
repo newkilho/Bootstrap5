@@ -48,6 +48,8 @@ switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
 	</div>
 </footer>
 
+<script src="<?php echo G5_THEME_URL; ?>/js/common.js?ver=2401251"></script>
+
 <?php
 if ($config['cf_analytics']) {
     echo $config['cf_analytics'];

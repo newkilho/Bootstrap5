@@ -47,14 +47,14 @@ header("Pragma: no-cache"); // HTTP/1.0
 	-->
 
 	<!-- Bootstrap5 -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 	<!-- GnuBoard5 -->
 	<?php if($config['cf_add_meta']) echo $config['cf_add_meta'].PHP_EOL; ?>
 	<title><?php echo $g5_head_title; ?></title>
 
-	<link rel="stylesheet" href="<?php echo G5_THEME_URL; ?>/css/custom.css">
+	<link rel="stylesheet" href="<?php echo G5_THEME_URL; ?>/css/custom.css?ver=2401231">
 
 	<script>
 	var g5_url       = "<?php echo G5_URL ?>";
@@ -66,6 +66,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 	var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 	var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
 	var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
+	var g5_theme_api_url = "<?php echo G5_THEME_URL ?>/api.php";
 	<?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
 	var g5_theme_shop_url = "<?php echo G5_THEME_SHOP_URL; ?>";
 	var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";

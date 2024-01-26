@@ -9,6 +9,15 @@ if (strstr($sfl, 'content'))
     $view['content'] = search_font($stx, $view['content']);
 
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
+
+if($member['mb_id'])
+{
+	$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' and bl_send_mb_id = '{$view['mb_id']}' limit 1; ";
+	$rst = sql_fetch($sql);
+	if(!empty($rst) && $rst['bl_id']) alert('차단한 회원의 글은 볼수 없습니다. 게시판 목록으로 이동합니다.', get_pretty_url($bo_table));
+}
+
+$report_href = $theme_config['enabled_report'] ? './' : '';
 ?>
 
 <div>
@@ -20,11 +29,10 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 		<div>
 			<ul class="list-inline mb-0">
 				<li class="list-inline-item">
-					<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($view['wr_name']); ?></a>
+					<?php echo $mb_info['name'] ?>
 					<?php if ($is_ip_view) { ?>
 					<small class="text-muted">(<?php echo $ip ?>)</small>
 					<?php } ?>
-					<?php echo $mb_info['menu'] ?>
 				</li>
 			</ul>
 			<ul class="list-inline text-muted small pt-1">
@@ -128,6 +136,7 @@ $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], 
 				<?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn btn-primary" onclick="win_scrap(this.href); return false;"><i class="fa fa-clipboard"></i> 스크랩</a><?php } ?>
 				<?php if ($reply_href) { ?><a href="<?php echo $reply_href ?>" class="btn btn-primary"><i class="fa fa-reply"></i> 답변</a><?php } ?>
 				<?php if ($write_href) { ?><a href="<?php echo $write_href ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a><?php } ?>
+				<?php if ($report_href) { ?><a href="<?php echo $report_href ?>" data-id="<?php echo $wr_id; ?>" class="btn btn-primary report"><i class="fa fa-warning"></i> 신고</a><?php } ?>
 			</div>
 		</div>
 	</div>

@@ -148,4 +148,7 @@ $theme_config = array(
     'ev_mobile_list_row'            => 5,       // 모바일 이벤트 이미지 줄 수
     'ca_mobile_list_best_mod'       => 2,       // 모바일 상품리스트 베스트상품 1줄당 이미지 수
     'ca_mobile_list_best_row'       => 3,       // 모바일 상품리스트 베스트상품 이미지 줄 수
+
+	'enabled_report'				=> true,	// 신고기능 활성화
+	'enabled_block'					=> true,	// 차단기능 활성화
 );

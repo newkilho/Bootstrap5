@@ -49,7 +49,7 @@ $write_pages = chg_paging($write_pages);
 	<?php
 		for ($i=0; $i<count($list); $i++) 
 		{	
-			$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']); 
+			$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
 			$thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], 320, 240, false, true);
 	?>
 		<div class="col-md-6 col-lg-4 mb-4">
@@ -70,10 +70,7 @@ $write_pages = chg_paging($write_pages);
 					<div class="d-flex justify-content-between">
 						<small class="text-muted">
 							<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> 
-							<div class="dropdown d-inline">
-								<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($list[$i]['wr_name']); ?></a>
-								<?php echo $mb_info['menu'] ?>
-							</div>					
+							<?php echo $mb_info['name'] ?>
 						</small>
 						<small class="text-muted text-right">
 							<i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime2'] ?>

@@ -107,11 +107,8 @@ $write_pages = chg_paging($write_pages);
 					</ul>
 				</td>
 				<td class="d-none d-md-table-cell">
-					<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> 
-					<div class="dropdown d-inline">
-						<a href="#" data-toggle="dropdown" class="text-dark"><?php echo get_text($list[$i]['wr_name']); ?></a>
-						<?php echo $mb_info['menu'] ?>
-					</div>
+					<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>">
+					<?php echo $mb_info['name'] ?>
 				</td>
 				<td class="d-none d-md-table-cell"><?php echo $list[$i]['datetime2'] ?></td>
 			</tr>

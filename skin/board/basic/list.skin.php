@@ -11,6 +11,14 @@ if($is_nogood) $colspan++;
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 0);
 
 $write_pages = chg_paging($write_pages);
+
+if($member['mb_id'])
+{
+	$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' ";
+
+    $rst = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($rst); $i++) $block[] = $row['bl_send_mb_id'];
+}
 ?>
 
 <div>
@@ -74,6 +82,8 @@ $write_pages = chg_paging($write_pages);
 			for ($i=0; $i<count($list); $i++)
 			{
 				$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
+
+				if(isset($block) && in_array($list[$i]['mb_id'], $block)) $list[$i]['href'] = '';
 			?>
 			<tr class="<?php if($list[$i]['is_notice']) echo "table-primary"; ?>">
 				<?php if($is_checkbox) { ?>
@@ -90,6 +100,7 @@ $write_pages = chg_paging($write_pages);
 					<?php echo $list[$i]['num'] ?>
 					<?php } ?>
 				</td>
+				<?php if($list[$i]['href']) { ?>
 				<td>
 					<?php if($is_category && $list[$i]['ca_name']) { ?>
 					<a href="<?php echo $list[$i]['ca_name_href'] ?>" class="badge bg-primary"><?php echo $list[$i]['ca_name'] ?></a>
@@ -100,25 +111,22 @@ $write_pages = chg_paging($write_pages);
 					</span>
 					<?php } ?>
 					<?php echo $list[$i]['icon_reply'] ?>
-					<?php if(isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']); ?>
+					<?php if(@$list[$i]['icon_secret']) echo '<small class="text-secondary"><i class="fa fa-lock"></i></small>'; ?>
 					<a href="<?php echo $list[$i]['href'] ?>" class="text-dark"><?php echo $list[$i]['subject'] ?></a>
 					<?php if($list[$i]['comment_cnt']) { ?> 
 					<span class="d-none d-md-inline-block badge bg-secondary"><?php echo $list[$i]['wr_comment']; ?></span>
 					<?php } ?>
 					<?php
-					if($list[$i]['icon_new']) echo ' <span class="badge bg-danger"><i class="fa fa-bell"></i></span>';
-					if(isset($list[$i]['icon_hot'])) echo ' <span class="badge bg-danger"><i class="fa fa-fire"></i></span>';
-					if(isset($list[$i]['icon_file'])) echo ' <small class="text-muted"><i class="fa fa-download"></i></small>';
-					if(isset($list[$i]['icon_link'])) echo ' <small class="text-muted"><i class="fa fa-link"></i></small>';
+					if(@$list[$i]['icon_new']) echo ' <small class="text-warning"><i class="fa fa-bolt"></i></small>';
+					if(@$list[$i]['icon_hot']) echo ' <small class="text-danger"><i class="fa fa-star"></i></small>';
+					if(@$list[$i]['icon_file']) echo ' <small class="text-muted"><i class="fa fa-download"></i></small>';
+					if(@$list[$i]['icon_link']) echo ' <small class="text-muted"><i class="fa fa-link"></i></small>';
 					?>
 					<!-- 모바일 -->
 					<ul class="list-inline small text-muted mt-1 mb-0 d-md-none">
 						<li class="list-inline-item">
 							<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>">
-							<div class="dropdown d-inline">
-								<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($list[$i]['wr_name']); ?></a>
-								<?php echo $mb_info['menu'] ?>
-							</div>
+							<?php echo $mb_info['name'] ?>
 						</li>
 						<li class="list-inline-item"><i class="fa fa-eye"></i> <?php echo number_format($list[$i]['wr_hit']) ?></li>
 						<li class="list-inline-item"><i class="fa fa-commenting-o"></i> <?php echo number_format($list[$i]['wr_comment']) ?></li>
@@ -129,15 +137,16 @@ $write_pages = chg_paging($write_pages);
 				</td>
 				<td class="d-none d-md-table-cell">
 					<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> 
-					<div class="dropdown d-inline">
-						<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($list[$i]['wr_name']); ?></a>
-						<?php echo $mb_info['menu'] ?>
-					</div>
+					<?php echo $mb_info['name'] ?>
 				</td>
 				<td class="d-none d-md-table-cell"><?php echo number_format($list[$i]['wr_hit']) ?></td>
 				<?php if($is_good) { ?><td class="d-none d-md-table-cell"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
 				<?php if($is_nogood) { ?><td class="d-none d-md-table-cell"><?php echo $list[$i]['wr_nogood'] ?></td><?php } ?>
 				<td class="d-none d-md-table-cell"><?php echo $list[$i]['datetime2'] ?></td>
+				<?php }else{ ?>
+				<td class="d-md-table-cell"><span class="text-muted">차단된 회원이 작성한 글입니다.</span></td>
+				<td class="d-none d-md-table-cell" colspan="<?php echo (3 + ($is_good ? 1 : 0) + ($is_nogood ? 1 : 0)); ?>"></td>
+				<?php } ?>
 			</tr>
 			<?php } ?>
 			<?php if(count($list) == 0) { echo '<tr><td colspan="'.$colspan.'">게시물이 없습니다.</td></tr>'; } ?>

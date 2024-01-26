@@ -22,7 +22,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		if($cmt_depth > $cmt_depth_old) echo '<ol class="list-unstyled ps-3 ps-lg-4">';
 		if($cmt_depth < $cmt_depth_old) for($j=$cmt_depth; $j<$cmt_depth_old; $j++) echo '</ol>';
 
-		$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
+		$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage'], 'text-dark fw-bold');
 
 		$list[$i]['datetime'] = substr($list[$i]['wr_datetime'],0,10) == G5_TIME_YMD ? substr($list[$i]['wr_datetime'], 11, 8) : substr($list[$i]['wr_datetime'], 2, 8);
 	?>
@@ -35,11 +35,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 			<div class="comm-body w-100">
 				<ul class="comm-name list-inline text-muted">
 					<li class="list-inline-item">
-						<a href="#" class="text-dark fw-bold" data-bs-toggle="dropdown"><?php echo get_text($list[$i]['wr_name']); ?></a>
+						<?php echo $mb_info['name'] ?>
 						<?php if ($is_ip_view) { ?>
 						<small class="text-muted">(<?php echo $list[$i]['ip']; ?>)</small>
 						<?php } ?>
-						<?php echo $mb_info['menu'] ?>
 					</li>
 					<li class="list-inline-item">
 						<?php include(G5_THEME_PATH.'/skin/sns/view_comment_list.sns.skin.php'); ?>
