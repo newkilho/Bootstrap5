@@ -90,7 +90,7 @@ function get_layout_breadcrumb($menu, $recursive=false)
 	return $output;
 }
 
-function get_member_info($mb_id, $name='', $email='', $homepage='', $css='text-dark')
+function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 {
     global $theme_config, $board, $bo_table, $sca, $is_admin, $member;
 
@@ -116,6 +116,9 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $css='text-d
     $homepage = set_http(clean_xss_tags($homepage));
     $homepage = get_text($homepage);
 
+	$css = isset($option['css']) ? $option['css'] : 'text-dark';
+	$len = isset($option['len']) ? $option['len'] : 20;
+
 	$menu = '';
 
 	$mb_ico_url = G5_IMG_URL.'/no_profile.gif';
@@ -139,7 +142,7 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $css='text-d
 
 	if (isset($board['bo_use_sideview']) && $board['bo_use_sideview'])
 	{
-		$menu = '<div class="dropdown d-inline"><a href="#" data-bs-toggle="dropdown" class="'.$css.'">'.$name.'</a><div class="dropdown-menu">';
+		$menu = '<div class="dropdown d-inline"><a href="#" data-bs-toggle="dropdown" class="'.$css.'">'.cut_str($name, $len).'</a><div class="dropdown-menu">';
 
 		if($mb_id)
 			$menu .= '<a href="'.G5_BBS_URL.'/memo_form.php?me_recv_mb_id='.$mb_id.'" class="dropdown-item" onclick="win_memo(this.href); return false;">쪽지보내기</a>';
@@ -161,7 +164,7 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $css='text-d
 			$menu .= '<a href="'.G5_ADMIN_URL.'/member_form.php?w=u&mb_id='.$mb_id.'" class="dropdown-item" target="_blank">회원정보변경</a>';
 			$menu .= '<a href="'.G5_ADMIN_URL.'/point_list.php?sfl=mb_id&stx='.$mb_id.'" class="dropdown-item" target="_blank">포인트내역</a>';
 		}
-		if($mb_id && $member['mb_id'] != $mb_id && $theme_config['enabled_block'])
+		if($mb_id && $member['mb_id'] != $mb_id && !$is_admin && $theme_config['enabled_block'])
 			$menu .= '<a href="./" data-id="'.$mb_id.'" class="dropdown-item block">차단하기</a>';
 
 		$menu .= '</div></div>';

@@ -70,7 +70,7 @@ if($member['mb_id'])
 				<?php } ?>
 				<th class="d-none d-md-table-cell" style="width: 4rem;">번호</th>
 				<th>제목</th>
-				<th class="d-none d-md-table-cell" style="width: 11rem;">글쓴이</th>
+				<th class="d-none d-md-table-cell" style="width: 9rem;">글쓴이</th>
 				<th class="d-none d-md-table-cell" style="width: 4rem;">조회</th>
 				<?php if($is_good) { ?><th class="d-none d-md-table-cell" style="width: 4rem;">추천</th><?php } ?>
 				<?php if($is_nogood) { ?><th class="d-none d-md-table-cell" style="width: 4rem;">비추</th><?php } ?>
@@ -81,7 +81,7 @@ if($member['mb_id'])
 			<?php 
 			for ($i=0; $i<count($list); $i++)
 			{
-				$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
+				$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage'], ['len'=>8]);
 
 				if(isset($block) && in_array($list[$i]['mb_id'], $block)) $list[$i]['href'] = '';
 			?>

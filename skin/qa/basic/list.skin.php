@@ -51,7 +51,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 				<?php } ?>
 				<th class="d-none d-md-table-cell" style="width: 4rem;">번호</th>
 				<th>제목</th>
-				<th class="d-none d-md-table-cell" style="width: 11rem;">글쓴이</th>
+				<th class="d-none d-md-table-cell" style="width: 9rem;">글쓴이</th>
 				<th class="d-none d-md-table-cell" style="width: 6rem;">날짜</th>
 				<th style="width: 5rem;">상태</th>
 			</tr>

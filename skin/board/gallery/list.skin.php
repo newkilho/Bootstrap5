@@ -56,7 +56,7 @@ $write_pages = chg_paging($write_pages);
 			<div class="card">
 				<div class="corner-card">
 					<?php if($list[$i]['icon_new']) { ?>
-					<div class="corner-ribbon shadow">NEW</div>
+					<div class="corner-ribbon shadow">새로운</div>
 					<?php } ?>
 					<a href="<?php echo $list[$i]['href'] ?>" class="w-100"><img src="<?php echo $thumb['src'] ?>" class="card-img-top"></a>
 				</div>
@@ -73,9 +73,9 @@ $write_pages = chg_paging($write_pages);
 							<?php echo $mb_info['name'] ?>
 						</small>
 						<small class="text-muted text-right">
-							<i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime2'] ?>
-							<i class="fa fa-eye pl-1"></i> <?php echo number_format($list[$i]['wr_hit']) ?>
-							<i class="fa fa-commenting-o pl-1"></i> <?php echo number_format($list[$i]['wr_comment']) ?>
+							<span class="d-inline d-sm-none"><i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime2'] ?></span>
+							<span class=""><i class="fa fa-eye pl-1"></i> <?php echo number_format($list[$i]['wr_hit']) ?></span>
+							<span class=""><i class="fa fa-commenting-o pl-1"></i> <?php echo number_format($list[$i]['wr_comment']) ?></span>
 						</small>
 					</div>
 				</div>

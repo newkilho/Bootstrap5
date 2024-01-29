@@ -22,7 +22,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		if($cmt_depth > $cmt_depth_old) echo '<ol class="list-unstyled ps-3 ps-lg-4">';
 		if($cmt_depth < $cmt_depth_old) for($j=$cmt_depth; $j<$cmt_depth_old; $j++) echo '</ol>';
 
-		$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage'], 'text-dark fw-bold');
+		$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage'], ['css'=>'text-dark fw-bold']);
 
 		$list[$i]['datetime'] = substr($list[$i]['wr_datetime'],0,10) == G5_TIME_YMD ? substr($list[$i]['wr_datetime'], 11, 8) : substr($list[$i]['wr_datetime'], 2, 8);
 	?>
