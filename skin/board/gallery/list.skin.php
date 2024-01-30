@@ -4,6 +4,14 @@ if(!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 0);
 
 $write_pages = chg_paging($write_pages);
+
+if($member['mb_id'])
+{
+	$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' ";
+
+    $rst = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($rst); $i++) $block[] = $row['bl_send_mb_id'];
+}
 ?>
 
 <div>
@@ -51,12 +59,17 @@ $write_pages = chg_paging($write_pages);
 		{	
 			$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
 			$thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], 320, 240, false, true);
+
+			if(isset($block) && in_array($list[$i]['mb_id'], $block)) $list[$i]['href'] = '';
 	?>
 		<div class="col-md-6 col-lg-4 mb-4">
+			<?php if($list[$i]['href']) { ?>
 			<div class="card">
 				<div class="corner-card">
 					<?php if($list[$i]['icon_new']) { ?>
 					<div class="corner-ribbon shadow">새로운</div>
+					<?php }elseif(isset($list[$i]['icon_hot']) && $list[$i]['icon_hot']){ ?>
+					<div class="corner-ribbon shadow">인기</div>
 					<?php } ?>
 					<a href="<?php echo $list[$i]['href'] ?>" class="w-100"><img src="<?php echo $thumb['src'] ?>" class="card-img-top"></a>
 				</div>
@@ -65,6 +78,7 @@ $write_pages = chg_paging($write_pages);
 						<?php if($is_checkbox) { ?>
 						<input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>" class="form-check-input">
 						<?php } ?>
+						<?php if(isset($list[$i]['icon_secret']) && $list[$i]['icon_secret']) echo '<small class="text-secondary"><i class="fa fa-lock"></i></small>'; ?>
 						<a href="<?php echo $list[$i]['href'] ?>" class="text-dark"><?php echo $list[$i]['subject'] ?></a>
 					</div>
 					<div class="d-flex justify-content-between">
@@ -80,6 +94,13 @@ $write_pages = chg_paging($write_pages);
 					</div>
 				</div>
 			</div>
+			<?php }else{ ?>
+			<div class="card h-100">
+				<div class="card-body d-flex justify-content-center align-items-center"">
+				<span class="text-muted">차단된 회원이 작성한 글입니다.</span>
+				</div>
+			</div>
+			<?php } ?>
 		</div>
 	<?php } ?>
 	</div>

@@ -111,16 +111,16 @@ if($member['mb_id'])
 					</span>
 					<?php } ?>
 					<?php echo $list[$i]['icon_reply'] ?>
-					<?php if(@$list[$i]['icon_secret']) echo '<small class="text-secondary"><i class="fa fa-lock"></i></small>'; ?>
+					<?php if(isset($list[$i]['icon_secret']) && $list[$i]['icon_secret']) echo '<small class="text-secondary"><i class="fa fa-lock"></i></small>'; ?>
 					<a href="<?php echo $list[$i]['href'] ?>" class="text-dark"><?php echo $list[$i]['subject'] ?></a>
 					<?php if($list[$i]['comment_cnt']) { ?> 
 					<span class="d-none d-md-inline-block badge bg-secondary"><?php echo $list[$i]['wr_comment']; ?></span>
 					<?php } ?>
 					<?php
-					if(@$list[$i]['icon_new']) echo ' <small class="text-warning"><i class="fa fa-bolt"></i></small>';
-					if(@$list[$i]['icon_hot']) echo ' <small class="text-danger"><i class="fa fa-star"></i></small>';
-					if(@$list[$i]['icon_file']) echo ' <small class="text-muted"><i class="fa fa-download"></i></small>';
-					if(@$list[$i]['icon_link']) echo ' <small class="text-muted"><i class="fa fa-link"></i></small>';
+					if($list[$i]['icon_new']) echo ' <small class="text-warning"><i class="fa fa-bolt"></i></small>';
+					if(isset($list[$i]['icon_hot']) && $list[$i]['icon_hot']) echo ' <small class="text-danger"><i class="fa fa-star"></i></small>';
+					if(isset($list[$i]['icon_file']) && $list[$i]['icon_file']) echo ' <small class="text-muted"><i class="fa fa-download"></i></small>';
+					if(isset($list[$i]['icon_link']) && $list[$i]['icon_link']) echo ' <small class="text-muted"><i class="fa fa-link"></i></small>';
 					?>
 					<!-- 모바일 -->
 					<ul class="list-inline small text-muted mt-1 mb-0 d-md-none">

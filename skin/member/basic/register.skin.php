@@ -25,9 +25,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">')
 				<label class="form-check-label fw-bold" for="chk_all">이용약관에 모두 동의합니다.</label>
 			</div>
 		</div>
-
 		<hr>
-
 		<div class="mb-4">
 			<div class="form-check mb-2">
 				<input type="checkbox" id="agree11" name="agree" value="1" class="form-check-input">

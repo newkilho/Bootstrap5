@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-//add_javascript(G5_POSTCODE_JS, 0);
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
 add_javascript('<script src="'.G5_JS_URL.'/jquery.register_form.js"></script>', 0);
 if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
@@ -70,31 +70,31 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 
 	<div class="mb-4">
 		<label for="reg_mb_id">아이디</label>
-		<input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" <?php echo $required ?> <?php echo $readonly ?> class="form-control <?php echo $readonly ?>" minlength="3" maxlength="20" placeholder="아이디">
+		<input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" <?php echo $required ?> <?php echo $readonly ?> class="form-control <?php if($readonly) echo 'bg-body-secondary'; ?>" minlength="3" maxlength="20">
 		<span style="font-size: 0.8rem;" class="text-muted">영문자, 숫자, _ 만 입력 가능. 최소 3자이상</span>
 	</div>
 
 	<div class="mb-2">
 		<label for="reg_mb_password">비밀번호</label>
-		<input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="form-control" minlength="3" maxlength="20" placeholder="비밀번호">
+		<input type="password" name="mb_password" id="reg_mb_password" <?php echo $required ?> class="form-control" minlength="3" maxlength="20">
 	</div>
 
 	<div class="mb-4">
 		<label for="reg_mb_password_re">비밀번호 확인</label>
-		<input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="form-control" minlength="3" maxlength="20" placeholder="비밀번호 확인">
+		<input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="form-control" minlength="3" maxlength="20">
 	</div>
 
 
 	<div class="mb-4">
 		<label for="reg_mb_name">이름</label>
-		<input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="form-control <?php echo $readonly ?>" placeholder="이름">
+		<input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="form-control <?php if($readonly) echo 'bg-body-secondary'; ?>">
 	</div>
 
 	<div class="mb-4">
 		<?php if ($req_nick) {  ?>
 		<label for="reg_mb_nick">닉네임</label>
 			<input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
-			<input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="form-control nospace" maxlength="20" placeholder="닉네임">
+			<input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="form-control nospace" maxlength="20">
 			<span id="msg_mb_nick"></span>
 			<span style="font-size: 0.8rem;" class="text-muted">공백없이 한글,영문,숫자만 입력 가능<br>닉네임 변경시 <?php echo (int)$config['cf_nick_modify'] ?>일 간 변경할 수 없습니다.</span>
 		<?php }  ?>
@@ -110,20 +110,20 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 		</span>
 		<?php }  ?>
 		<input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
-		<input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="form-control email" maxlength="100" placeholder="이메일">
+		<input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="form-control email" maxlength="100">
 	</div>
 
 	<?php if ($config['cf_use_homepage']) {  ?>
 	<div class="mb-4">
 		<label for="reg_mb_homepage">홈페이지</label>
-		<input type="text" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" <?php echo $config['cf_req_homepage']?"required":""; ?> class="form-control" maxlength="255" placeholder="홈페이지">
+		<input type="text" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" <?php echo $config['cf_req_homepage']?"required":""; ?> class="form-control" maxlength="255" placeholder="https://">
 	</div>
 	<?php }  ?>
 
 	<?php if ($config['cf_use_tel']) {  ?>
 	<div class="mb-4">
 		<label for="reg_mb_tel">전화번호</label>
-		<input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" <?php echo $config['cf_req_tel']?"required":""; ?> class="form-control" maxlength="20" placeholder="전화번호">
+		<input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" <?php echo $config['cf_req_tel']?"required":""; ?> class="form-control" maxlength="20">
 	</div>
 	<?php }  ?>
 
@@ -131,7 +131,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<div class="mb-4">
 		<label for="reg_mb_hp">휴대폰번호</label>
 		
-		<input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="form-control" maxlength="20" placeholder="휴대폰번호">
+		<input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="form-control" maxlength="20">
 		<?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
 		<input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 		<?php } ?>
@@ -143,7 +143,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 		<label for="reg_mb_zip">주소</label>
 		<div class="input-group">
 			<button type="button" class="btn btn-outline-secondary" onclick="win_zip('fregisterform', 'mb_zip', 'mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_addr_jibeon');">주소검색</button>
-			<input type="text" name="mb_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="reg_mb_zip" <?php echo $config['cf_req_addr']?"required":""; ?> class="form-control" maxlength="6"  placeholder="우편번호">
+			<input type="text" name="mb_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="reg_mb_zip" <?php echo $config['cf_req_addr']?"required":""; ?> class="form-control" maxlength="6" placeholder="우편번호">
 		</div>
 	</div>
 	<div class="mb-2">
@@ -153,7 +153,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 		<input type="text" name="mb_addr2" value="<?php echo get_text($member['mb_addr2']) ?>" id="reg_mb_addr2" class="form-control" placeholder="상세주소">
 	</div>
 	<div class="mb-2">
-		<input type="text" name="mb_addr3" value="<?php echo get_text($member['mb_addr3']) ?>" id="reg_mb_addr3" class="form-control" readonly="readonly"  placeholder="참고항목">
+		<input type="text" name="mb_addr3" value="<?php echo get_text($member['mb_addr3']) ?>" id="reg_mb_addr3" class="form-control bg-body-secondary" readonly="readonly" placeholder="참고항목">
 	</div>
 	<div class="mb-4">
 		<input type="hidden" name="mb_addr_jibeon" value="<?php echo get_text($member['mb_addr_jibeon']); ?>">
@@ -163,14 +163,14 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<?php if ($config['cf_use_signature']) {  ?>
 	<div class="mb-4">
 		<label for="reg_mb_signature">서명</label>
-		<textarea name="mb_signature" id="reg_mb_signature" <?php echo $config['cf_req_signature']?"required":""; ?> class="form-control"   placeholder="서명"><?php echo $member['mb_signature'] ?></textarea>
+		<textarea name="mb_signature" id="reg_mb_signature" <?php echo $config['cf_req_signature']?"required":""; ?> class="form-control"><?php echo $member['mb_signature'] ?></textarea>
 	</div>
 	<?php }  ?>
 
 	<?php if ($config['cf_use_profile']) {  ?>
 	<div class="mb-4">
 		<label for="reg_mb_profile">자기소개</label>
-		<textarea name="mb_profile" id="reg_mb_profile" <?php echo $config['cf_req_profile']?"required":""; ?> class="form-control" placeholder="자기소개"><?php echo $member['mb_profile'] ?></textarea>
+		<textarea name="mb_profile" id="reg_mb_profile" <?php echo $config['cf_req_profile']?"required":""; ?> class="form-control"><?php echo $member['mb_profile'] ?></textarea>
 	</div>
 	<?php }  ?>
 
@@ -272,7 +272,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<?php if ($w == "" && $config['cf_use_recommend']) {  ?>
 	<div class="mb-4">
 		<label for="reg_mb_recommend">추천인아이디</label>
-		<input class="form-control" type="text" name="mb_recommend" id="reg_mb_recommend" placeholder="추천인아이디">
+		<input class="form-control" type="text" name="mb_recommend" id="reg_mb_recommend">
 	</div>
 	<?php }  ?>
 
