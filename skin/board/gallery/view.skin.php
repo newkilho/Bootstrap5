@@ -17,7 +17,7 @@ if($member['mb_id'])
 	if(!empty($rst) && $rst['bl_id']) alert('차단한 회원의 글은 볼수 없습니다. 게시판 목록으로 이동합니다.', get_pretty_url($bo_table));
 }
 
-$report_href = ($is_member && !$is_admin && $theme_config['enabled_report']) ? './' : '';
+$report_href = ($is_member && !$is_admin && $member['mb_id'] != $view['mb_id'] && $theme_config['enabled_report']) ? './' : '';
 ?>
 
 <div>

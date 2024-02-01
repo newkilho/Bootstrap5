@@ -94,11 +94,9 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 {
     global $theme_config, $board, $bo_table, $sca, $is_admin, $member;
 
-	$email_enc = new str_encrypt();
-    $email = $email_enc->encrypt($email);
-    $homepage = set_http(clean_xss_tags($homepage));
+    static $cache = array();
 
-    $name     = get_text($name, 0, true);
+	$name     = get_text($name, 0, true);
 
     if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
         return $cache['id:' . $mb_id];
@@ -142,7 +140,7 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 
 	if (isset($board['bo_use_sideview']) && $board['bo_use_sideview'])
 	{
-		$menu = '<div class="dropdown d-inline"><a href="#" data-bs-toggle="dropdown" class="'.$css.'">'.cut_str($name, $len).'</a><div class="dropdown-menu">';
+		$menu = '<div class="dropdown d-inline"><a href="#" data-bs-toggle="dropdown" class="'.$css.'">'.cut_str($name, $len, '').'</a><div class="dropdown-menu">';
 
 		if($mb_id)
 			$menu .= '<a href="'.G5_BBS_URL.'/memo_form.php?me_recv_mb_id='.$mb_id.'" class="dropdown-item" onclick="win_memo(this.href); return false;">쪽지보내기</a>';

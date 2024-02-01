@@ -70,7 +70,7 @@ if($member['mb_id'])
 				<?php } ?>
 				<th class="d-none d-md-table-cell" style="width: 4rem;">번호</th>
 				<th>제목</th>
-				<th class="d-none d-md-table-cell" style="width: 9rem;">글쓴이</th>
+				<th class="d-none d-md-table-cell" style="width: 10rem;">글쓴이</th>
 				<th class="d-none d-md-table-cell" style="width: 4rem;">조회</th>
 				<?php if($is_good) { ?><th class="d-none d-md-table-cell" style="width: 4rem;">추천</th><?php } ?>
 				<?php if($is_nogood) { ?><th class="d-none d-md-table-cell" style="width: 4rem;">비추</th><?php } ?>
