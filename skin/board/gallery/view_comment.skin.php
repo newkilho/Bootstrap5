@@ -33,27 +33,38 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		<div class="d-flex mb-4">
 			<img class="comm-icon rounded me-3" src="<?php echo $mb_info['img'] ?>">
 			<div class="comm-body w-100">
-				<ul class="comm-name list-inline text-muted">
-					<li class="list-inline-item">
-						<?php echo $mb_info['name'] ?>
-						<?php if ($is_ip_view) { ?>
-						<small class="text-muted">(<?php echo $list[$i]['ip']; ?>)</small>
-						<?php } ?>
-					</li>
-					<li class="list-inline-item">
-						<?php include(G5_THEME_PATH.'/skin/sns/view_comment_list.sns.skin.php'); ?>
-					</li>
-				</ul>
-				<ul class="list-inline">
-					<?php if (strstr($list[$i]['wr_option'], "secret")) { ?><img src="<?php echo $board_skin_url; ?>/img/icon_secret.gif" alt="비밀글"><?php } ?>
+				<div class="d-flex mb-2">
+					<ul class="comm-name list-inline text-muted">
+						<li class="list-inline-item">
+							<?php echo $mb_info['name'] ?>
+							<?php if ($is_ip_view) { ?>
+							<small class="text-muted">(<?php echo $list[$i]['ip']; ?>)</small>
+							<?php } ?>
+							<small><i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime']; ?></small>
+						</li>
+					</ul>
+					<div class="ms-auto">
+						<button class="btn btn-sm" type="button" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+						<ul class="dropdown-menu">
+							<?php include(G5_THEME_PATH.'/skin/sns/view_comment_list.sns.skin.php'); ?>
+							<?php if ($list[$i]['is_reply']) { ?>
+							<li><a href="<?php echo $c_reply_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;" class="dropdown-item">댓글</a></li>
+							<?php } ?>
+							<?php if ($list[$i]['is_edit']) { ?>
+							<li><a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;" class="dropdown-item">수정</a></li>
+							<?php } ?>
+							<?php if ($list[$i]['is_del'])  { ?>
+							<li><a href="<?php echo $list[$i]['del_link'];  ?>" onclick="return comment_delete();" class="dropdown-item">삭제</a></li>
+							<?php } ?>
+							<?php if ($report_href) { ?>
+							<li><a href="<?php echo $report_href ?>" data-id="<?php echo $comment_id; ?>" class="dropdown-item report">신고</a></li>
+							<?php } ?>
+						</ul>
+					</div>
+				</div>
+				<ul class="list-inline mb-2">
+					<?php if (strstr($list[$i]['wr_option'], "secret")) { ?><i class="fa fa-lock"></i><?php } ?>
 			        <?php echo $comment ?>
-				</ul>
-				<ul class="list-inline text-muted small pt-1 mb-2">
-					<li class="list-inline-item"><i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime']; ?></li>
-
-					<?php if ($list[$i]['is_reply']) { ?><li class="list-inline-item"><i class="fa fa-commenting-o"></i> <a href="<?php echo $c_reply_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;" class="text-muted">댓글</a></li><?php } ?>
-					<?php if ($list[$i]['is_edit']) { ?><li class="list-inline-item"><i class="fa fa-pencil-square"></i> <a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;" class="text-muted">수정</a></li><?php } ?>
-					<?php if ($list[$i]['is_del'])  { ?><li class="list-inline-item"><i class="fa fa-trash-o"></i> <a href="<?php echo $list[$i]['del_link'];  ?>" onclick="return comment_delete();" class="text-muted">삭제</a></li><?php } ?>
 				</ul>
 				<span id="edit_<?php echo $comment_id ?>" class=""></span><!-- 수정 -->
 		        <span id="reply_<?php echo $comment_id ?>" class=""></span><!-- 답변 -->
@@ -101,7 +112,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 				<input type="password" name="wr_password" id="wr_password" required class="form-control" placeholder="비밀번호">
 			</div>
 			<?php }	?>
-
+			
 			<div class="form-check mb-2">
 				<input type="checkbox" name="wr_secret" value="secret" id="wr_secret" class="form-check-input">
 				<label class="form-check-label" for="wr_secret">비밀글 사용</label>
@@ -289,7 +300,7 @@ comment_box('', 'c'); // 댓글 입력폼이 보이도록 처리하기위해서 
 $(function() {
     // sns 등록
     $("#bo_vc_send_sns").load(
-		"<?php echo G5_THEME_URL; ?>/skin/sns/view_comment_write.sns.skin.php?bo_table=<?php echo $bo_table; ?>",
+        "<?php echo G5_THEME_URL; ?>/skin/sns/view_comment_write.sns.skin.php?bo_table=<?php echo $bo_table; ?>",
         function() {
             save_html = document.getElementById('bo_vc_w').innerHTML;
         }

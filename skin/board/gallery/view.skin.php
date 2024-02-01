@@ -17,17 +17,17 @@ if($member['mb_id'])
 	if(!empty($rst) && $rst['bl_id']) alert('차단한 회원의 글은 볼수 없습니다. 게시판 목록으로 이동합니다.', get_pretty_url($bo_table));
 }
 
-$report_href = $theme_config['enabled_report'] ? './' : '';
+$report_href = ($is_member && !$is_admin && $theme_config['enabled_report']) ? './' : '';
 ?>
 
 <div>
 
 	<blockquote><h3><?php echo cut_str(get_text($view['wr_subject']), 70); ?></h3></blockquote>
 
-	<div class="d-flex mb-2">
+	<div class="d-flex mb-4">
 		<img class="view-icon rounded me-3" src="<?php echo $mb_info['img'] ?>">
 		<div>
-			<ul class="list-inline mb-0">
+			<ul class="list-inline mb-1">
 				<li class="list-inline-item">
 					<?php echo $mb_info['name'] ?>
 					<?php if ($is_ip_view) { ?>
@@ -35,7 +35,7 @@ $report_href = $theme_config['enabled_report'] ? './' : '';
 					<?php } ?>
 				</li>
 			</ul>
-			<ul class="list-inline text-muted small pt-1">
+			<ul class="list-inline text-muted small mb-0">
 				<li class="list-inline-item"><i class="fa fa-clock-o"></i> <?php echo $view['datetime2'] ?></li>
 				<li class="list-inline-item"><i class="fa fa-eye"></i> <?php echo number_format($view['wr_hit']) ?> 회</li>
 				<li class="list-inline-item"><i class="fa fa-commenting-o"></i> <?php echo number_format($view['wr_comment']) ?> 건</li>
@@ -77,7 +77,7 @@ $report_href = $theme_config['enabled_report'] ? './' : '';
 	<?php } ?>
 
 	<?php if($board['bo_use_good'] || $board['bo_use_nogood']) { ?>
-	<div class="mb-4 pt-4 text-center">
+	<div class="my-5 text-center">
 		<?php if($board['bo_use_good']) { ?>
 		<a href="<?php echo $good_href?>" id="good_button" class="btn btn-outline-primary <?php if(!$good_href) echo 'disabled'; ?>"><i class="fa fa-thumbs-up"></i> <strong><?php echo number_format($view['wr_good']); ?></strong></a>
 		<b id="bo_v_act_good"></b>
@@ -116,29 +116,35 @@ $report_href = $theme_config['enabled_report'] ? './' : '';
 	if ($attach) echo '<ul class="list-group mb-4">'.$attach.'</ul>';
 	?>
 
-	<?php include_once(G5_THEME_PATH."/skin/sns/view.sns.skin.php"); ?>
-
-	<div class="d-flex flex-sm-row flex-column justify-content-sm-between mb-4">
-		<div class="d-flex justify-content-center mb-2 mb-sm-0">
-			<?php if ($update_href || $delete_href || $copy_href || $move_href || $search_href) { ?>
-			<div class="btn-group xs-100">
-				<?php if ($update_href) { ?><a href="<?php echo $update_href ?>" class="btn btn-danger"><i class="fa fa-pencil-square-o"></i> 수정</a><?php } ?>
-				<?php if ($delete_href) { ?><a href="<?php echo $delete_href ?>" onclick="del(this.href); return false;" class="btn btn-danger"><i class="fa fa-trash-o"></i> 삭제</a><?php } ?>
-				<?php if ($copy_href) { ?><a href="<?php echo $copy_href ?>" onclick="board_move(this.href); return false;" class="btn btn-danger"><i class="fa fa-copy"></i> 복사</a><?php } ?>
-				<?php if ($move_href) { ?><a href="<?php echo $move_href ?>" onclick="board_move(this.href); return false;" class="btn btn-danger"><i class="fa fa-arrows-alt"></i> 이동</a><?php } ?>
-				<?php if ($search_href) { ?><a href="<?php echo $search_href ?>" class="btn btn-danger"><i class="fa fa-search"></i> 검색</a><?php } ?>
-			</div>
+	<?php if($update_href || $delete_href || $copy_href || $move_href || $scrap_href || $reply_href || $report_href || $board['bo_use_sns']) { ?>
+	<div class="d-flex justify-content-between mb-2">
+		<ul class="list-inline small">
+			<?php if ($update_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $update_href ?>" class="text-muted"><i class="fa fa-pencil-square-o"></i> 수정</a>
 			<?php } ?>
-		</div>
-		<div class="d-flex justify-content-center">
-			<div class="btn-group xs-100">
-				<a href="<?php echo $list_href ?>" class="btn btn-primary"><i class="fa fa-list"></i> 목록</a>
-				<?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn btn-primary" onclick="win_scrap(this.href); return false;"><i class="fa fa-clipboard"></i> 스크랩</a><?php } ?>
-				<?php if ($reply_href) { ?><a href="<?php echo $reply_href ?>" class="btn btn-primary"><i class="fa fa-reply"></i> 답변</a><?php } ?>
-				<?php if ($write_href) { ?><a href="<?php echo $write_href ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a><?php } ?>
-				<?php if ($report_href) { ?><a href="<?php echo $report_href ?>" data-id="<?php echo $wr_id; ?>" class="btn btn-primary report"><i class="fa fa-warning"></i> 신고</a><?php } ?>
-			</div>
-		</div>
+			<?php if ($delete_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $delete_href ?>" onclick="del(this.href); return false;" class="text-muted"><i class="fa fa-trash-o"></i> 삭제</a>
+			<?php } ?>
+			<?php if ($copy_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $copy_href ?>" onclick="board_move(this.href); return false;" class="text-muted"><i class="fa fa-copy"></i> 복사</a></li>
+			<?php } ?>
+			<?php if ($move_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $move_href ?>" onclick="board_move(this.href); return false;" class="text-muted"><i class="fa fa-arrows-alt"></i> 이동</a></li>
+			<?php } ?>
+		</ul>
+
+		<ul class="list-inline small">
+			<?php if ($scrap_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $scrap_href;  ?>" target="_blank" onclick="win_scrap(this.href); return false;" class="text-muted"><i class="fa fa-clipboard"></i> 스크랩</a></li>
+			<?php } ?>
+			<?php include_once(G5_THEME_PATH."/skin/sns/view.sns.skin.php"); ?>
+			<?php if ($reply_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $reply_href ?>" class="text-muted"><i class="fa fa-reply"></i> 답변</a></li>
+			<?php } ?>
+			<?php if ($report_href) { ?>
+			<li class="list-inline-item"><a href="<?php echo $report_href ?>" data-id="<?php echo $wr_id; ?>" class="text-muted report"><i class="fa fa-warning"></i> 신고</a></li>
+			<?php } ?>
+		</ul>
 	</div>
 
 	<?php if ($prev_href || $next_href) { ?>
@@ -147,12 +153,19 @@ $report_href = $theme_config['enabled_report'] ? './' : '';
 		<?php if ($next_href) { ?><li class="list-group-item"><small class="text-muted"><i class="fa fa-caret-down"></i><span class="d-none d-md-inline"> 다음글</span></small> <a href="<?php echo $next_href ?>" class="text-dark"><?php echo $next_wr_subject;?></a> <small class="float-end text-muted d-none d-md-inline"><?php echo str_replace('-', '.', substr($next_wr_date, '2', '8')); ?></small></li><?php } ?>
 	</ul>
 	<?php } ?>
+	<?php } ?>
 
 	<?php
 	// 코멘트 입출력
 	include_once(G5_BBS_PATH.'/view_comment.php');
 	?>
 
+	<div class="d-flex justify-content-end">
+		<div class="btn-group xs-100 mb-4">
+			<a href="<?php echo $list_href ?>" class="btn btn-primary"><i class="fa fa-list"></i> 목록</a>
+			<?php if ($write_href) { ?><a href="<?php echo $write_href ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> 글쓰기</a><?php } ?>
+		</div>
+	</div>
 </div>
 
 <script>

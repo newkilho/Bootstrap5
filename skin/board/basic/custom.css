@@ -41,7 +41,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .list-icon { width: 20px; height: 20px; vertical-align: text-bottom; }
 .view-icon { width: 48px; height: 48px; }
 .comm-icon { width: 48px; height: 48px; }
-.comm-body { background: #f4f4f4; padding: 20px; border-radius: 5px; }
+.comm-body { background: #f4f4f4; padding: 10px 20px 10px 20px; border-radius: 5px; }
 
 @media (max-width: 575px)
 {
