@@ -57,7 +57,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 			</tr>
 		</thead>
 		<tbody>
-			<?php for ($i=0; $i<count($list); $i++) { ?>
+			<?php for ($i=0; $i<count($list); $i++) {
+				$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['qa_name'], $list[$i]['qa_email'], '', ['len'=>8]);
+			?>
 			<tr>
 				<?php if ($is_checkbox) { ?>
 				<td>
@@ -72,7 +74,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 						<?php if ($list[$i]['icon_file']) echo ' <i class="fa fa-download" aria-hidden="true"></i>' ; ?>
 					</a>
 				</td>
-				<td class="d-none d-md-table-cell"><?php echo $list[$i]['name']; ?></td>
+				<td class="d-none d-md-table-cell">
+					<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>">
+					<?php echo $mb_info['name'] ?>
+				</td>
 				<td class="d-none d-md-table-cell"><?php echo $list[$i]['date']; ?></td>
 				<td><span class=" <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '완료' : '대기'); ?></span></td>
 			</tr>

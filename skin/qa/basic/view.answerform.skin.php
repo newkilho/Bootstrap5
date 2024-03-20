@@ -42,7 +42,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 		<div class="form-group row mb-2">
 			<label class="col-sm-2 col-form-label">제목</label>
 			<div class="col-sm-10">
-				<input class="form-control" type="text" name="qa_subject" value="" id="qa_subject" required placeholder="제목">
+				<input class="form-control" type="text" name="qa_subject" value="" id="qa_subject" required>
 			</div>
 		</div>
 

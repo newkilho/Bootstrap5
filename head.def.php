@@ -30,72 +30,64 @@ header("Cache-Control: no-cache"); // HTTP/1.1
 header("Expires: 0"); // rfc2616 - Section 14.21
 header("Pragma: no-cache"); // HTTP/1.0
 */
+
+$g5['dark'] = preg_match("/-inapp\(([^,]+),([^)]+)\)/", $_SERVER['HTTP_USER_AGENT'], $matches) && $matches[2] === 'dark' ? true : false;
 ?>
 <!doctype html>
 <html lang="ko-KR" prefix="og: http://ogp.me/ns#">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php if($config['cf_add_meta']) echo $config['cf_add_meta'].PHP_EOL; ?>
+<title><?php echo $g5_head_title; ?></title>
 
-	<!-- Basic -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">	
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+// 자바스크립트에서 사용하는 전역변수 선언
+var g5_url       = "<?php echo G5_URL ?>";
+var g5_bbs_url   = "<?php echo G5_BBS_URL ?>";
+var g5_is_member = "<?php echo isset($is_member)?$is_member:''; ?>";
+var g5_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
+var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";
+var g5_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
+var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
+var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
+var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
+var g5_theme_url = "<?php echo G5_THEME_URL ?>";
+<?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
+var g5_theme_shop_url = "<?php echo G5_THEME_SHOP_URL; ?>";
+var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
+<?php } ?>
+<?php if(defined('G5_IS_ADMIN')) { ?>
+var g5_admin_url = "<?php echo G5_ADMIN_URL; ?>";
+<?php } ?>
+</script>
 
-	<!-- Favicon -->
-	<!--
-	<link rel="shortcut icon" href="<?php echo G5_URL ?>/favicon.ico" type="image/x-icon" />
-	<link rel="apple-touch-icon" href="<?php echo G5_URL ?>/apple-touch-icon.png">
-	-->
-
-	<!-- Bootstrap5 -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-	<!-- GnuBoard5 -->
-	<?php if($config['cf_add_meta']) echo $config['cf_add_meta'].PHP_EOL; ?>
-	<title><?php echo $g5_head_title; ?></title>
-
-	<link rel="stylesheet" href="<?php echo G5_THEME_URL; ?>/css/custom.css?ver=2401231">
-
-	<script>
-	var g5_url       = "<?php echo G5_URL ?>";
-	var g5_bbs_url   = "<?php echo G5_BBS_URL ?>";
-	var g5_is_member = "<?php echo isset($is_member)?$is_member:''; ?>";
-	var g5_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
-	var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";
-	var g5_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
-	var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
-	var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
-	var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
-	var g5_theme_api_url = "<?php echo G5_THEME_URL ?>/api.php";
-	<?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
-	var g5_theme_shop_url = "<?php echo G5_THEME_SHOP_URL; ?>";
-	var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
-	<?php } ?>
-	<?php if(defined('G5_IS_ADMIN')) { ?>
-	var g5_admin_url = "<?php echo G5_ADMIN_URL; ?>";
-	<?php } ?>
-	</script>
-
-	<?php
-	add_javascript('<script src="'.G5_JS_URL.'/jquery-1.12.4.min.js"></script>', 0);
-	add_javascript('<script src="'.G5_JS_URL.'/jquery-migrate-1.4.1.min.js"></script>', 0);
-	if (defined('_SHOP_')) {
-		if(!G5_IS_MOBILE) {
-			add_javascript('<script src="'.G5_JS_URL.'/jquery.shop.menu.js?ver='.G5_JS_VER.'"></script>', 0);
-		}
-	} else {
-		add_javascript('<script src="'.G5_JS_URL.'/jquery.menu.js?ver='.G5_JS_VER.'"></script>', 0);
+<?php
+add_javascript('<script src="'.G5_JS_URL.'/jquery-1.12.4.min.js"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/jquery-migrate-1.4.1.min.js"></script>', 0);
+if (defined('_SHOP_')) {
+	if(!G5_IS_MOBILE) {
+		add_javascript('<script src="'.G5_JS_URL.'/jquery.shop.menu.js?ver='.G5_JS_VER.'"></script>', 0);
 	}
-	add_javascript('<script src="'.G5_JS_URL.'/common.js?ver='.G5_JS_VER.'"></script>', 0);
-	add_javascript('<script src="'.G5_JS_URL.'/wrest.js?ver='.G5_JS_VER.'"></script>', 0);
-	add_javascript('<script src="'.G5_JS_URL.'/placeholders.min.js"></script>', 0);
-	add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/font-awesome/css/font-awesome.min.css">', 0);
+} else {
+	add_javascript('<script src="'.G5_JS_URL.'/jquery.menu.js?ver='.G5_JS_VER.'"></script>', 0);
+}
+add_javascript('<script src="'.G5_JS_URL.'/common.js?ver='.G5_JS_VER.'"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/wrest.js?ver='.G5_JS_VER.'"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/placeholders.min.js"></script>', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/font-awesome/css/font-awesome.min.css">', 0);
 
-	if(G5_IS_MOBILE) {
-	    add_javascript('<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>', 1); // overflow scroll 감지
-	}
-	if(!defined('G5_IS_ADMIN'))
-		echo $config['cf_add_script'];
-	?>
+if(G5_IS_MOBILE) {
+	add_javascript('<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>', 1); // overflow scroll 감지
+}
+if(!defined('G5_IS_ADMIN'))
+	echo $config['cf_add_script'];
+?>
 </head>
 <body<?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>
+
+<?php
+add_stylesheet('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_THEME_URL.'/css/custom.css?ver=2403101">', 0);
+
+add_javascript('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>', 0);

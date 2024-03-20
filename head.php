@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
+switch($_SERVER['SCRIPT_NAME'])
 {
 	case '/bbs/password_lost.php':
 	case '/bbs/member_cert_refresh.php':
@@ -11,7 +11,6 @@ switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
 	case '/plugin/social/register_member.php':
 		include_once(G5_THEME_PATH.'/head.def.php');
 		return;
-		break;
 }
 
 include_once(G5_THEME_PATH.'/head.def.php');
@@ -28,7 +27,7 @@ $g5['sidebar']['right'] = !defined('_INDEX_')&&is_file(G5_PATH.'/sidebar.right.p
 
 if(defined('_INDEX_')) include G5_THEME_PATH.'/newwin.inc.php';
 ?>
-<header class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-4">
+<header class="navbar navbar-expand-lg border-bottom mb-4">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="<?php echo G5_URL; ?>"><img height="48" src="<?php echo G5_IMG_URL; ?>/logo.png"></a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#TopNavbar" aria-controls="TopNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

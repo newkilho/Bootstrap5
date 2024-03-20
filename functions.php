@@ -162,7 +162,7 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 			$menu .= '<a href="'.G5_ADMIN_URL.'/member_form.php?w=u&mb_id='.$mb_id.'" class="dropdown-item" target="_blank">회원정보변경</a>';
 			$menu .= '<a href="'.G5_ADMIN_URL.'/point_list.php?sfl=mb_id&stx='.$mb_id.'" class="dropdown-item" target="_blank">포인트내역</a>';
 		}
-		if($mb_id && $member['mb_id'] != $mb_id && !$is_admin && $theme_config['enabled_block'])
+		if($mb_id && $member['mb_id'] && $member['mb_id'] != $mb_id && !$is_admin && $theme_config['enabled_block'])
 			$menu .= '<a href="./" data-id="'.$mb_id.'" class="dropdown-item block">차단하기</a>';
 
 		$menu .= '</div></div>';
@@ -175,6 +175,28 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 
 function chg_paging($write_pages)
 {
+	$write_pages = str_replace('<nav class="pg_wrap">', '<nav><ul class="pagination">', $write_pages);
+	$write_pages = str_replace('</nav>', '</ul></nav>', $write_pages);
+
+	$write_pages = preg_replace('/<a href="[^"]+" class="pg_page pg_start">[^<]+<\/a>/', '', $write_pages);
+	$write_pages = preg_replace('/<a href="[^"]+" class="pg_page pg_end">[^<]+<\/a>/', '', $write_pages);
+
+	$pattern = '/<a\s+href=("|\')([^"\']*)("|\')\s+class=("|\')([^"\']*)("|\')\s*>(.*?)<\/a>/i';
+	$replacement = '<li class="page-item"><a href="$2" class="page-link">$7</a></li>';
+	$write_pages = preg_replace($pattern, $replacement, $write_pages);
+
+	$pattern = '/<strong\s+class=("|\')([^"\']*)("|\')\s*>(.*?)<\/strong>/i';
+	$replacement = '<li class="page-item active"><a href="#" class="page-link">$4</a></li>';
+	$write_pages = preg_replace($pattern, $replacement, $write_pages);
+
+	$write_pages = str_replace(['<span class="sound_only">페이지', '<span class="sound_only">열린', '<span class="pg">', '</span>'], '', $write_pages);
+
+	$write_pages = str_replace('이전', '<i class="fa fa-angle-left"></i>', $write_pages);
+	$write_pages = str_replace('다음', '<i class="fa fa-angle-right"></i>', $write_pages);
+
+	return $write_pages;
+
+	/*
 	$remove = array();
 	$remove[] = '<span class="sound_only">페이지';
 	$remove[] = '<span class="pg">';
@@ -195,13 +217,13 @@ function chg_paging($write_pages)
 	$write_pages = str_replace('<span class="sound_only">열린<strong class="pg_current">', '<li class="page-item active"><a href="#" class="page-link">', $write_pages);
 	$write_pages = str_replace('</strong>', '</a></li>', $write_pages);
 
-
 	$write_pages = str_replace('처음', '<i class="fa fa-angle-double-left"></i>', $write_pages);
 	$write_pages = str_replace('이전', '<i class="fa fa-angle-left"></i>', $write_pages);
 	$write_pages = str_replace('다음', '<i class="fa fa-angle-right"></i>', $write_pages);
 	$write_pages = str_replace('맨끝', '<i class="fa fa-angle-double-right"></i>', $write_pages);
 
 	return $write_pages;
+	*/
 }
 
 function chg_board_list($str_board_list)

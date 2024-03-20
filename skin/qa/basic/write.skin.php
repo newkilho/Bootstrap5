@@ -58,7 +58,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 		<label class="col-sm-2 col-form-label">이메일</label>
 		<div class="col-sm-10">
 			<div class="input-group">
-				<input class="form-control" type="text" name="qa_email" value="<?php echo get_text($write['qa_email']); ?>" id="qa_email" <?php echo $req_email; ?> placeholder="이메일">
+				<input class="form-control" type="text" name="qa_email" value="<?php echo get_text($write['qa_email']); ?>" id="qa_email" <?php echo $req_email; ?>>
 			</div>
 		</div>
 	</div>
@@ -68,7 +68,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 	<div class="form-group row mb-2">
 		<label class="col-sm-2 col-form-label">휴대폰</label>
 		<div class="col-sm-10">
-			<input class="form-control" type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?> placeholder="휴대폰">
+			<input class="form-control" type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?>>
 		</div>
 	</div>
 	<?php } ?>
@@ -76,7 +76,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 	<div class="form-group row mb-2">
 		<label class="col-sm-2 col-form-label">제목</label>
 		<div class="col-sm-10">
-			<input class="form-control" type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required placeholder="제목">
+			<input class="form-control" type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required>
 		</div>
 	</div>
 

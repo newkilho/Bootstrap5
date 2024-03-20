@@ -19,8 +19,7 @@ $mb_info = get_member_info($view['mb_id'], $view['qa_name'], $view['qa_email']);
 		<div>
 			<ul class="list-inline mb-0">
 				<li class="list-inline-item">
-					<a href="#" data-bs-toggle="dropdown" class="text-dark"><?php echo get_text($view['name']); ?></a>
-					<?php echo $mb_info['menu'] ?>
+					<?php echo $mb_info['name'] ?>
 				</li>
 			</ul>
 			<ul class="list-inline text-muted small pt-1">
