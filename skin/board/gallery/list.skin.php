@@ -24,7 +24,7 @@ if($member['mb_id'])
 			$category_href = get_pretty_url($bo_table);
 	?>
 
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs mb-2">
 		<li class="nav-item">
 			<a class="nav-link <?php if($sca=='') echo 'active'; ?>" href="<?php echo $category_href ?>">전체</a>
 		</li>
@@ -34,7 +34,7 @@ if($member['mb_id'])
 			{
 		?>
 		<li class="nav-item">
-			<a class="nav-link <?php if($category==$sca) echo 'active'; ?>" href="<?php get_pretty_url($bo_table,'','sca='.urlencode($category)); ?>"><?php echo $category ?></a>
+			<a class="nav-link <?php if($category==$sca) echo 'active'; ?>" href="<?php echo get_pretty_url($bo_table,'','sca='.urlencode($category)); ?>"><?php echo $category ?></a>
 		</li>
 		<?php
 			}
