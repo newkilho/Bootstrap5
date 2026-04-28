@@ -8,6 +8,7 @@ if($is_checkbox) $colspan++;
 if($is_good) $colspan++;
 if($is_nogood) $colspan++;
 
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 0);
 
 $write_pages = chg_paging($write_pages);
@@ -71,10 +72,10 @@ if($member['mb_id'])
 				<th class="d-none d-md-table-cell" style="width: 4rem;">번호</th>
 				<th>제목</th>
 				<th class="d-none d-md-table-cell" style="width: 10rem;">글쓴이</th>
-				<th class="d-none d-md-table-cell" style="width: 4rem;">조회</th>
-				<?php if($is_good) { ?><th class="d-none d-md-table-cell" style="width: 4rem;">추천</th><?php } ?>
-				<?php if($is_nogood) { ?><th class="d-none d-md-table-cell" style="width: 4rem;">비추</th><?php } ?>
-				<th class="d-none d-md-table-cell" style="width: 6rem;">날짜</th>
+				<th class="d-none d-md-table-cell" style="width: 4rem;"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회</a></th>
+				<?php if($is_good) { ?><th class="d-none d-md-table-cell" style="width: 4rem;"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천</a></th><?php } ?>
+				<?php if($is_nogood) { ?><th class="d-none d-md-table-cell" style="width: 4rem;"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추</a></th><?php } ?>
+				<th class="d-none d-md-table-cell" style="width: 6rem;"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜</a></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -161,7 +162,7 @@ if($member['mb_id'])
 
 	<div class="d-flex flex-sm-row flex-column justify-content-sm-between mb-4">
 		<div class="d-flex justify-content-center mb-2 mb-sm-0">
-			<?php if($is_checkbox) { ?>
+			<?php if($is_checkbox && ($is_admin == 'super' || $is_auth)) { ?>
 			<div class="btn-group xs-100">
 				<button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn-danger"><i class="fa fa-trash-o"></i> 삭제</button>
 				<button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="btn btn-danger"><i class="fa fa-file"></i> 복사</button>
@@ -200,13 +201,7 @@ if($member['mb_id'])
 					<div class="input-group">
 						<div class="input-group-text bg-white">
 							<select class="form-select bg-transparent border-0" name="sfl" id="sfl">
-								<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
-								<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
-								<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
-								<option value="mb_id,1"<?php echo get_selected($sfl, 'mb_id,1'); ?>>아이디</option>
-								<option value="mb_id,0"<?php echo get_selected($sfl, 'mb_id,0'); ?>>아이디(코)</option>
-								<option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>글쓴이</option>
-								<option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
+								<?php echo get_board_sfl_select_options($sfl); ?>
 							</select>
 						</div>
 						<input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="form-control" size="25" maxlength="20" placeholder="검색어">

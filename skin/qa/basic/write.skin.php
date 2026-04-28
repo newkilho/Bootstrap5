@@ -185,6 +185,25 @@ function fwrite_submit(f)
 	}
 	<?php } ?>
 
+	$.ajax({
+		type: "POST",
+		url: g5_bbs_url+"/ajax.write.token.php",
+		data: { 'token_case' : 'qa_write' },
+		cache: false,
+		async: false,
+		dataType: "json",
+		success: function(data) {
+			if (typeof data.token !== "undefined") {
+				token = data.token;
+
+				if(typeof f.token === "undefined")
+					$(f).prepend('<input type="hidden" name="token" value="">');
+
+				$(f).find("input[name=token]").val(token);
+			}
+		}
+	});
+
 	document.getElementById("btn_submit").disabled = "disabled";
 
 	return true;

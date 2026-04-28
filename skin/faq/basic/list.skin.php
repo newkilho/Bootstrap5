@@ -68,6 +68,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$faq_skin_url.'/custom.css">', 0)
 
 	if ($timg_src)
 		echo '<div><img src="'.$timg_src.'" class="img-fluid"></div>';
+
+	if ($admin_href)
+		echo '<div class="text-end mt-3"><a href="'.$admin_href.'" class="btn btn-outline-secondary btn-sm" title="FAQ 수정"><i class="fa fa-cog" aria-hidden="true"></i> FAQ 수정</a></div>';
 	?>
 
 </div>

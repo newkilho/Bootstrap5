@@ -111,7 +111,7 @@ if($member['mb_id'])
 
 	<div class="d-flex flex-sm-row flex-column justify-content-sm-between mb-4">
 		<div class="d-flex justify-content-center mb-2 mb-sm-0">
-			<?php if($is_checkbox) { ?>
+			<?php if($is_checkbox && ($is_admin == 'super' || $is_auth)) { ?>
 			<div class="btn-group xs-100">
 				<button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn-danger"><i class="fa fa-trash-o"></i> 삭제</button>
 				<button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="btn btn-danger"><i class="fa fa-file"></i> 복사</button>
@@ -150,13 +150,7 @@ if($member['mb_id'])
 					<div class="input-group">
 						<div class="input-group-text bg-white">
 							<select class="form-select bg-transparent border-0" name="sfl" id="sfl">
-								<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
-								<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
-								<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
-								<option value="mb_id,1"<?php echo get_selected($sfl, 'mb_id,1'); ?>>아이디</option>
-								<option value="mb_id,0"<?php echo get_selected($sfl, 'mb_id,0'); ?>>아이디(코)</option>
-								<option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>글쓴이</option>
-								<option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
+								<?php echo get_board_sfl_select_options($sfl); ?>
 							</select>
 						</div>
 						<input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="form-control" size="25" maxlength="20" placeholder="검색어">

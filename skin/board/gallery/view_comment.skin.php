@@ -25,6 +25,20 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage'], ['css'=>'text-dark fw-bold']);
 
 		$list[$i]['datetime'] = substr($list[$i]['wr_datetime'],0,10) == G5_TIME_YMD ? substr($list[$i]['wr_datetime'], 11, 8) : substr($list[$i]['wr_datetime'], 2, 8);
+
+		$c_reply_href = $comment_common_url.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
+		$c_edit_href = $comment_common_url.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
+
+		if(($list[$i]['is_edit'] || $list[$i]['is_del'] || $list[$i]['is_reply']) && $w == 'cu' && $c_id == $comment_id) {
+			$sql = " select wr_id, wr_content, mb_id from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
+			$cmt = sql_fetch($sql);
+			if (isset($cmt)) {
+				if (!($is_admin || ($member['mb_id'] == $cmt['mb_id'] && $cmt['mb_id']))) {
+					$cmt['wr_content'] = '';
+				}
+				$c_wr_content = $cmt['wr_content'];
+			}
+		}
 	?>
 	<li class="mb-4">
 		<div class="anchor">

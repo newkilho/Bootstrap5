@@ -228,17 +228,43 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<?php } ?>
 
 	<div class="mb-4">
+		<?php if($config['cf_use_promotion'] == 1) { ?>
+		<div class="form-check mb-2">
+			<input type="checkbox" name="mb_marketing_agree" value="1" id="reg_mb_marketing_agree" class="form-check-input" <?php echo $member['mb_marketing_agree'] ? 'checked' : ''; ?>>
+			<label class="form-check-label" for="reg_mb_marketing_agree">(선택) 마케팅 목적의 개인정보 수집 및 이용</label>
+			<input type="hidden" name="mb_marketing_agree_default" value="<?php echo $member['mb_marketing_agree'] ?>">
+			<?php if ($member['mb_marketing_agree'] == 1 && $member['mb_marketing_date'] != "0000-00-00 00:00:00") echo '<span class="text-muted small ms-1">(동의일자: '.$member['mb_marketing_date'].')</span>'; ?>
+		</div>
+		<div class="form-check mb-2">
+			<input type="checkbox" name="mb_promotion_agree" value="1" id="reg_mb_promotion_agree" class="form-check-input">
+			<label class="form-check-label" for="reg_mb_promotion_agree">(선택) 광고성 정보 수신 동의</label>
+		</div>
+		<?php } ?>
+
 		<div class="form-check mb-2">
 			<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" class="form-check-input" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?>>
 			<label class="form-check-label" for="reg_mb_mailling">정보 메일을 받겠습니다.</label>
+			<input type="hidden" name="mb_mailling_default" value="<?php echo $member['mb_mailling']; ?>">
+			<?php if ($w == 'u' && $member['mb_mailling'] == 1 && $member['mb_mailling_date'] != "0000-00-00 00:00:00") echo '<span class="text-muted small ms-1">(동의일자: '.$member['mb_mailling_date'].')</span>'; ?>
 		</div>
 
 		<?php if ($config['cf_use_hp']) {  ?>
 		<div class="form-check mb-2">
 			<input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" class="form-check-input" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
 			<label class="form-check-label" for="reg_mb_sms">휴대폰 문자메세지를 받겠습니다.</label>
+			<input type="hidden" name="mb_sms_default" value="<?php echo $member['mb_sms']; ?>">
+			<?php if ($w == 'u' && $member['mb_sms'] == 1 && $member['mb_sms_date'] != "0000-00-00 00:00:00") echo '<span class="text-muted small ms-1">(동의일자: '.$member['mb_sms_date'].')</span>'; ?>
 		</div>
 		<?php }  ?>
+
+		<?php if($config['cf_use_promotion'] == 1 && !empty($config['cf_sms_use'])) { ?>
+		<div class="form-check mb-2">
+			<input type="checkbox" name="mb_thirdparty_agree" value="1" id="reg_mb_thirdparty_agree" class="form-check-input" <?php echo $member['mb_thirdparty_agree'] ? 'checked' : ''; ?>>
+			<label class="form-check-label" for="reg_mb_thirdparty_agree">(선택) 개인정보 제3자 제공 동의</label>
+			<input type="hidden" name="mb_thirdparty_agree_default" value="<?php echo $member['mb_thirdparty_agree'] ?>">
+			<?php if ($member['mb_thirdparty_agree'] == 1 && $member['mb_thirdparty_date'] != "0000-00-00 00:00:00") echo '<span class="text-muted small ms-1">(동의일자: '.$member['mb_thirdparty_date'].')</span>'; ?>
+		</div>
+		<?php } ?>
 
 		<?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능  ?>
 		<div>
