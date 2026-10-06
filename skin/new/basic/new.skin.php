@@ -11,7 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/custom.css">', 0)
 
 $group_select = str_replace('<label for="gr_id" class="sound_only">그룹</label>', '', $group_select);
 $group_select = str_replace('id="gr_id">', 'id="gr_id" class="form-select">', $group_select);
-$write_pages = chg_paging($write_pages);
+$write_pages = isset($total_page) ? get_bs_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=") : '';
 ?>
 <div>
 	<form name="fnew" method="get">
@@ -60,7 +60,7 @@ $write_pages = chg_paging($write_pages);
 	<input type="hidden" name="page"     value="<?php echo $page; ?>">
 	<input type="hidden" name="pressed"  value="">
 
-	<h2 class="font-weight-normal pt-3 mb-4"><strong class="font-weight-extra-bold">최신글</strong></h2>
+	<h2 class="fw-normal pt-3 mb-4"><strong class="fw-bolder">최신글</strong></h2>
 
 	<table class="table xs-full mb-4"> <!-- table-striped table-hover  -->
 		<thead>
@@ -103,7 +103,7 @@ $write_pages = chg_paging($write_pages);
 					<ul class="list-inline small text-muted mt-1 mb-0 d-md-none">
 						<li class="list-inline-item"><img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> <?php echo get_text($list[$i]['wr_name']); ?></li>
 						<li class="list-inline-item"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>" class="text-muted"><?php echo $bo_subject ?></a></li>
-						<li class="list-inline-item float-right"><i class="fas fa-clock"></i> <?php echo $list[$i]['datetime2'] ?></li>
+						<li class="list-inline-item float-end"><i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime2'] ?></li>
 					</ul>
 				</td>
 				<td class="d-none d-md-table-cell">
@@ -129,7 +129,7 @@ $write_pages = chg_paging($write_pages);
 	<?php if ($is_admin) { ?>
 	<div class="d-flex justify-content-end mb-4">
 		<div class="btn-group xs-100">
-			<button type="submit" name="btn_submit" title="선택삭제" onclick="document.pressed=this.title" class="btn btn-danger"><i class="fas fa-trash-alt"></i> 삭제</button>
+			<button type="submit" name="btn_submit" title="선택삭제" onclick="document.pressed=this.title" class="btn btn-danger"><i class="fa fa-trash-o"></i> 삭제</button>
 		</div>
 	</div>
 	<?php } ?>

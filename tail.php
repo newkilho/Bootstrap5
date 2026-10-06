@@ -28,7 +28,7 @@ switch(substr($_SERVER['SCRIPT_FILENAME'], strlen(G5_PATH)))
 	<div class="container py-2">
 		<div class="row py-4">
 			<div class="col-lg-2 d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
-				<a href="<?php echo G5_URL ?>" class="logo pr-0 pr-lg-3">
+				<a href="<?php echo G5_URL ?>" class="logo pe-0 pe-lg-3">
 					<img src="<?php echo G5_IMG_URL ?>/logo.png" height="33">
 				</a>
 			</div>

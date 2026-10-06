@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $group_select = str_replace('class="select"', 'class="form-select"', $group_select);
-$write_pages = chg_paging($write_pages);
+$write_pages = isset($total_page) ? get_bs_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=') : '';
 ?>
 
 <div>
@@ -69,7 +69,7 @@ $write_pages = chg_paging($write_pages);
 
 	<div class="row">
 		<div class="col">
-			<h2 class="font-weight-normal mb-4"><strong class="font-weight-extra-bold">&quot;<?php echo $stx ?>&quot;</strong> 검색 결과</h2>
+			<h2 class="fw-normal mb-4"><strong class="fw-bolder">&quot;<?php echo $stx ?>&quot;</strong> 검색 결과</h2>
 
 			<?php if ($stx) { if ($board_count) { ?>
 			<?php
@@ -77,7 +77,7 @@ $write_pages = chg_paging($write_pages);
 			?>
 			<ul class="list-inline">
 				<li class="list-inline-item mb-1">
-					<a href="?<?php echo $search_query ?>&amp;gr_id=<?php echo $gr_id ?>" class="btn btn-primary btn-sm <?php if(strpos($str_board_list, ' active"')===false) echo 'active' ?>">전체게시판 <?php if(strpos($str_board_list, ' active"')===false) { ?><span class="badge badge-light"><?php echo number_format($total_count) ?></span><?php } ?></a>
+					<a href="?<?php echo $search_query ?>&amp;gr_id=<?php echo $gr_id ?>" class="btn btn-primary btn-sm <?php if(strpos($str_board_list, ' active"')===false) echo 'active' ?>">전체게시판 <?php if(strpos($str_board_list, ' active"')===false) { ?><span class="badge bg-light text-dark"><?php echo number_format($total_count) ?></span><?php } ?></a>
 				</li><?php echo $str_board_list ?>
 			</ul>
 			<hr class="mb-0">
@@ -96,7 +96,7 @@ $write_pages = chg_paging($write_pages);
 			for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
 				if ($list[$idx][$i]['wr_is_comment'])
 				{
-					$comment_def = '<i class="far fa-comment-dots"></i> ';
+					$comment_def = '<i class="fa fa-commenting-o"></i> ';
 					$comment_href = '#c_'.$list[$idx][$i]['wr_id'];
 				}
 				else

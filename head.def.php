@@ -88,7 +88,7 @@ if(!defined('G5_IS_ADMIN'))
 <body<?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>
 
 <?php
-add_stylesheet('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">', 0);
-add_stylesheet('<link rel="stylesheet" href="'.G5_THEME_URL.'/css/custom.css?ver=2403101">', 0);
+add_stylesheet('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_THEME_URL.'/css/custom.css?ver='.filemtime(G5_THEME_PATH.'/css/custom.css').'">', 0);
 
-add_javascript('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>', 0);
+add_javascript('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>', 0);

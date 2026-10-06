@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $colspan = 6;
 if ($is_checkbox) $colspan++;
 
-$list_pages = chg_paging($list_pages);
+$list_pages = isset($total_page) ? preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_bs_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './qalist.php'.$qstr.'&amp;page=')) : '';
 
 add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/custom.css">', 0);
 ?>

@@ -11,14 +11,15 @@ if($is_nogood) $colspan++;
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 0);
 
-$write_pages = chg_paging($write_pages);
+$write_pages = isset($total_page) ? get_bs_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page=')) : '';
 
-if($member['mb_id'])
+$block = array();
+if ($member['mb_id'] && !empty($theme_config['enabled_block']))
 {
-	$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' ";
+	$sql = " select bl_send_mb_id from {$g5['member_table']}_block where bl_recv_mb_id = '".sql_real_escape_string($member['mb_id'])."' ";
 
-    $rst = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($rst); $i++) $block[] = $row['bl_send_mb_id'];
+	$rst = sql_query($sql, false);
+	while ($row = sql_fetch_array($rst)) $block[$row['bl_send_mb_id']] = true;
 }
 ?>
 
@@ -84,7 +85,7 @@ if($member['mb_id'])
 			{
 				$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage'], ['len'=>8]);
 
-				if(isset($block) && in_array($list[$i]['mb_id'], $block)) $list[$i]['href'] = '';
+				if(isset($block[$list[$i]['mb_id']])) $list[$i]['href'] = '';
 			?>
 			<tr class="<?php if($list[$i]['is_notice']) echo "table-primary"; ?>">
 				<?php if($is_checkbox) { ?>

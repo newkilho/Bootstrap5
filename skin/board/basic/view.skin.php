@@ -10,11 +10,10 @@ if (strstr($sfl, 'content'))
 
 $mb_info = get_member_info($view['mb_id'], $view['wr_name'], $view['wr_email'], $view['wr_homepage']);
 
-if($member['mb_id'])
+if ($member['mb_id'] && !empty($theme_config['enabled_block']))
 {
-	$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' and bl_send_mb_id = '{$view['mb_id']}' limit 1; ";
-	$rst = sql_fetch($sql);
-	if(!empty($rst) && $rst['bl_id']) alert('차단한 회원의 글은 볼수 없습니다. 게시판 목록으로 이동합니다.', get_pretty_url($bo_table));
+	$sql = " select bl_id from {$g5['member_table']}_block where bl_recv_mb_id = '".sql_real_escape_string($member['mb_id'])."' and bl_send_mb_id = '".sql_real_escape_string($view['mb_id'])."' limit 1 ";
+	if (sql_fetch($sql, false)) alert('차단한 회원의 글은 볼수 없습니다. 게시판 목록으로 이동합니다.', get_pretty_url($bo_table));
 }
 
 $report_href = ($is_member && !$is_admin && $member['mb_id'] != $view['mb_id'] && $theme_config['enabled_report']) ? './' : '';

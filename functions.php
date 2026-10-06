@@ -69,27 +69,6 @@ function get_layout_menu($menu)
 	return $html;
 }
 
-function get_layout_breadcrumb($menu, $recursive=false)
-{
-	global $g5;
-
-	$output = '';
-	foreach($menu as $item)
-	{
-		if($item['me_code'] == substr($g5['me_code'], 0, strlen($item['me_code'])))
-			if($item['me_code'] != $g5['me_code'])
-				$output .= '<li class="breadcrumb-item"><a href="'.$item['me_link'].'">'.$item['me_name'].'</a></li>';
-			else
-				$output .= '<li class="breadcrumb-item active">'.$item['me_name'].'</li>';
-
-		if($item['sub']) $output .= get_layout_breadcrumb($item['sub'], true);
-	}
-
-	if(!$recursive) $output = '<li class="breadcrumb-item"><a href="'.G5_URL.'">Home</a></li>'.$output;
-
-	return $output;
-}
-
 function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 {
     global $theme_config, $board, $bo_table, $sca, $is_admin, $member;
@@ -99,7 +78,9 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 	$name     = get_text($name, 0, true);
 
     // 목록 한 페이지에서 같은 회원이 반복되므로 file_exists 2회를 요청당 1회로
-    $cache_key = md5(serialize([$mb_id, $name, $email, $homepage, $option]));
+    $cache_key = $mb_id."\x1f".$name."\x1f".$email."\x1f".$homepage."\x1f"
+        .(isset($option['css']) ? $option['css'] : '')."\x1f"
+        .(isset($option['len']) ? $option['len'] : '');
     if (isset($cache[$cache_key])) return $cache[$cache_key];
 
     $email = get_string_encrypt($email);
@@ -118,13 +99,13 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 
     if ($mb_id)
 	{
-		$mb_icon_img = $mb_id.'.gif';
+		$mb_dir = substr($mb_id, 0, 2).'/'.$mb_id.'.gif';
 
-		if(file_exists(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_icon_img))
-			$mb_ico_url = G5_DATA_URL.'/member/'.substr($mb_id,0,2).'/'.$mb_icon_img;
+		if(file_exists(G5_DATA_PATH.'/member/'.$mb_dir))
+			$mb_ico_url = G5_DATA_URL.'/member/'.$mb_dir;
 
-		if(file_exists(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_icon_img))
-			$mb_img_url = G5_DATA_URL.'/member_image/'.substr($mb_id,0,2).'/'.$mb_icon_img;
+		if(file_exists(G5_DATA_PATH.'/member_image/'.$mb_dir))
+			$mb_img_url = G5_DATA_URL.'/member_image/'.$mb_dir;
 	} else {
 		if(!$bo_table)
 		  return $cache[$cache_key] = array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'name'=>$name);
@@ -167,37 +148,46 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
     return $cache[$cache_key] = array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'name'=>$menu);
 }
 
-function chg_paging($write_pages)
+function get_bs_paging($write_pages, $cur_page, $total_page, $url, $add='')
 {
-	$write_pages = str_replace('<nav class="pg_wrap">', '<nav><ul class="pagination">', $write_pages);
-	$write_pages = str_replace('</nav>', '</ul></nav>', $write_pages);
+	$write_pages = max(1, (int)$write_pages);
 
-	$write_pages = preg_replace('/<a href="[^"]+" class="pg_page pg_start">[^<]+<\/a>/', '', $write_pages);
-	$write_pages = preg_replace('/<a href="[^"]+" class="pg_page pg_end">[^<]+<\/a>/', '', $write_pages);
+	$url = preg_replace('#(&amp;)?page=[0-9]*#', '', $url);
+	$url .= substr($url, -1) === '?' ? 'page=' : '&amp;page=';
+	$url = preg_replace('|[^\w\-~+_.?#=!&;,/:%@$\|*\'()\[\]\x80-\xff]|i', '', clean_xss_tags($url));
 
-	$pattern = '/<a\s+href=("|\')([^"\']*)("|\')\s+class=("|\')([^"\']*)("|\')\s*>(.*?)<\/a>/i';
-	$replacement = '<li class="page-item"><a href="$2" class="page-link">$7</a></li>';
-	$write_pages = preg_replace($pattern, $replacement, $write_pages);
+	$start_page = ((int)(($cur_page - 1) / $write_pages)) * $write_pages + 1;
+	$end_page   = min($start_page + $write_pages - 1, $total_page);
 
-	$pattern = '/<strong\s+class=("|\')([^"\']*)("|\')\s*>(.*?)<\/strong>/i';
-	$replacement = '<li class="page-item active"><a href="#" class="page-link">$4</a></li>';
-	$write_pages = preg_replace($pattern, $replacement, $write_pages);
+	$str = '';
 
-	$write_pages = str_replace(['<span class="sound_only">페이지', '<span class="sound_only">열린', '<span class="pg">', '</span>'], '', $write_pages);
+	if ($start_page > 1)
+		$str .= '<li class="page-item"><a class="page-link" href="'.$url.($start_page-1).$add.'" aria-label="이전"><i class="fa fa-angle-left"></i></a></li>';
 
-	$write_pages = str_replace('이전', '<i class="fa fa-angle-left"></i>', $write_pages);
-	$write_pages = str_replace('다음', '<i class="fa fa-angle-right"></i>', $write_pages);
+	if ($total_page > 1) {
+		for ($k = $start_page; $k <= $end_page; $k++) {
+			if ($cur_page != $k)
+				$str .= '<li class="page-item"><a class="page-link" href="'.$url.$k.$add.'">'.$k.'</a></li>';
+			else
+				$str .= '<li class="page-item active" aria-current="page"><a class="page-link" href="#">'.$k.'</a></li>';
+		}
+	}
 
-	return $write_pages;
+	if ($total_page > $end_page)
+		$str .= '<li class="page-item"><a class="page-link" href="'.$url.($end_page+1).$add.'" aria-label="다음"><i class="fa fa-angle-right"></i></a></li>';
+
+	return $str ? '<nav><ul class="pagination">'.$str.'</ul></nav>' : '';
 }
 
 function chg_board_list($str_board_list)
 {
-	$str_board_list = str_replace('<li>', '<li class="list-inline-item">', $str_board_list);
-	$str_board_list = str_replace('<strong>', '', $str_board_list);
-	$str_board_list = str_replace('</strong><span class="cnt_cmt">', ' <span class="badge badge-light">', $str_board_list);
-	$str_board_list = str_replace(' class=sch_on>', ' class="btn btn-primary btn-sm active">', $str_board_list);
-	$str_board_list = str_replace(' >', ' class="btn btn-primary btn-sm">', $str_board_list);
-
-	return $str_board_list;
+	// bbs/search.php 가 만드는 <li> 구조를 재조립
+	return preg_replace_callback(
+		'#<li><a href="([^"]*)"\s*(class=sch_on)?><strong>(.*?)</strong><span class="cnt_cmt">([0-9]+)</span></a></li>#s',
+		function ($m) {
+			return '<li class="list-inline-item"><a href="'.$m[1].'" class="btn btn-primary btn-sm'.($m[2] ? ' active' : '').'">'
+				.$m[3].' <span class="badge bg-light text-dark">'.$m[4].'</span></a></li>';
+		},
+		$str_board_list
+	);
 }

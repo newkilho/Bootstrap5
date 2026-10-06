@@ -11,7 +11,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	</div>
 	<div class="card-body">
 		<ul class="list-inline text-muted small">
-			<li class="list-inline-item float-right"><i class="fa fa-clock-o"></i> <?php echo $answer['qa_datetime'] ?></li>
+			<li class="list-inline-item float-end"><i class="fa fa-clock-o"></i> <?php echo $answer['qa_datetime'] ?></li>
 		</ul>
 		<div>
 			<?php echo get_view_thumbnail(conv_content($answer['qa_content'], $answer['qa_html']), $qaconfig['qa_image_width']); ?>

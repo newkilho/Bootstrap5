@@ -3,14 +3,15 @@ if(!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/custom.css">', 0);
 
-$write_pages = chg_paging($write_pages);
+$write_pages = isset($total_page) ? get_bs_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page=')) : '';
 
-if($member['mb_id'])
+$block = array();
+if ($member['mb_id'] && !empty($theme_config['enabled_block']))
 {
-	$sql = " select * from {$g5['member_table']}_block where bl_recv_mb_id = '{$member['mb_id']}' ";
+	$sql = " select bl_send_mb_id from {$g5['member_table']}_block where bl_recv_mb_id = '".sql_real_escape_string($member['mb_id'])."' ";
 
-    $rst = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($rst); $i++) $block[] = $row['bl_send_mb_id'];
+	$rst = sql_query($sql, false);
+	while ($row = sql_fetch_array($rst)) $block[$row['bl_send_mb_id']] = true;
 }
 ?>
 
@@ -60,7 +61,7 @@ if($member['mb_id'])
 			$mb_info = get_member_info($list[$i]['mb_id'], $list[$i]['wr_name'], $list[$i]['wr_email'], $list[$i]['wr_homepage']);
 			$thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], 320, 240, false, true);
 
-			if(isset($block) && in_array($list[$i]['mb_id'], $block)) $list[$i]['href'] = '';
+			if(isset($block[$list[$i]['mb_id']])) $list[$i]['href'] = '';
 	?>
 		<div class="col-md-6 col-lg-4 mb-4">
 			<?php if($list[$i]['href']) { ?>
@@ -86,10 +87,10 @@ if($member['mb_id'])
 							<img class="list-icon rounded" src="<?php echo $mb_info['img'] ?>"> 
 							<?php echo $mb_info['name'] ?>
 						</small>
-						<small class="text-muted text-right">
+						<small class="text-muted text-end">
 							<span class="d-inline d-sm-none"><i class="fa fa-clock-o"></i> <?php echo $list[$i]['datetime2'] ?></span>
-							<span class=""><i class="fa fa-eye pl-1"></i> <?php echo number_format($list[$i]['wr_hit']) ?></span>
-							<span class=""><i class="fa fa-commenting-o pl-1"></i> <?php echo number_format($list[$i]['wr_comment']) ?></span>
+							<span class=""><i class="fa fa-eye ps-1"></i> <?php echo number_format($list[$i]['wr_hit']) ?></span>
+							<span class=""><i class="fa fa-commenting-o ps-1"></i> <?php echo number_format($list[$i]['wr_comment']) ?></span>
 						</small>
 					</div>
 				</div>

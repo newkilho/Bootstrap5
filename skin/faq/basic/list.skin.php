@@ -60,7 +60,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$faq_skin_url.'/custom.css">', 0)
 	<div class="alert alert-danger py-5"><?php if($stx) echo '검색된 게시물이 없습니다.'; else '등록된 FAQ가 없습니다.'; ?></div>
 	<?php } ?>
 
-	<?php echo chg_paging(get_paging($page_rows, $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page=')); ?>
+	<?php echo get_bs_paging($page_rows, $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page='); ?>
 
 	<?php
 	// 하단 HTML

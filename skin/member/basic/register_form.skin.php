@@ -180,7 +180,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 		<div class="card">
 			<div class="card-body">
 				<img id="btn_mb_img" src="<?php if ($w == 'u' && file_exists($mb_img_path)) echo $mb_img_url; else echo G5_URL.'/img/no_profile.gif'; ?>" style="width: <?php echo $config['cf_member_img_width'] ?>px; height: <?php echo $config['cf_member_img_height'] ?>px;">
-				<input type="file" class="sr-only" name="mb_img" id="reg_mb_img" accept="image/*">
+				<input type="file" class="visually-hidden" name="mb_img" id="reg_mb_img" accept="image/*">
 
 				<!--
 				<?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
