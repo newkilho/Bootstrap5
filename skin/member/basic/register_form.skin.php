@@ -50,7 +50,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 	<?php
 	}
 
-	if ($config['cf_cert_use'] && $member['mb_certify']) { echo 'test';
+	if ($config['cf_cert_use'] && $member['mb_certify']) {
 		switch  ($member['mb_certify']) {
 			case "simple": 
 				$mb_cert = "간편인증";
@@ -63,7 +63,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 			break;
 		}                 
 	?>
-		<div id="msg_certify mb-2">
+		<div id="msg_certify" class="mb-2">
 		<strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 		</div>
 	<?php } ?>
@@ -201,29 +201,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipi
 			gif, jpg, png파일만 가능, 용량은 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하
 		</span>
 		-->
-	</div>
-	<?php } ?>
-
-	<?php if (false && $member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
-	<div class="mb-4">
-		<label for="reg_mb_img">회원이미지</label>
-		<input type="file" class="form-control" name="mb_img" id="reg_mb_img">
-						
-		<span style="font-size: 0.8rem;" class="text-muted">
-			<!--이미지 크기는 가로 <?php echo $config['cf_member_img_width'] ?>픽셀, 세로 <?php echo $config['cf_member_img_height'] ?>픽셀 이하<br>-->
-			gif, jpg, png파일만 가능, 용량은 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하
-		</span>
-
-		<?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
-		<div class="mt-2">
-			<img src="<?php echo $mb_img_url ?>" alt="회원이미지">
-			<div class="form-check">
-				<input type="checkbox" name="del_mb_img" value="1" id="del_mb_img" class="form-check-input">
-				<label class="form-check-label" for="del_mb_img">삭제</label>
-			</div>
-		</div>
-		<?php }  ?>
-	
 	</div>
 	<?php } ?>
 
@@ -531,7 +508,6 @@ $(function() {
 
 	$("#btn_mb_img").click(function(e){
 		e.preventDefault();
-		console.log('OK');
 		fileTarget.click();
 		});
 }); 

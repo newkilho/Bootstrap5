@@ -90,7 +90,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 				<input type="hidden" name="sfl" value="wr_subject||wr_content">
 				<input type="hidden" name="sop" value="and">
 				<div class="input-group mt-2 mb-1 my-md-0">
-					<input class="form-control" type="search" name="q" value="<?=$q?>" placeholder="검색어" aria-label="Search">
+					<input class="form-control" type="search" name="q" value="<?php echo get_text($q) ?>" placeholder="검색어" aria-label="Search">
 					<button class="btn btn-secondary" type="submit">검색</button>
 				</div>
 			</form>

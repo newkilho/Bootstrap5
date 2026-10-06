@@ -52,8 +52,6 @@ $admin = get_admin("super");
 <div id="ft_copy">Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.</div>
 
 <?php
-$sec = get_microtime() - $begin_time;
-$file = $_SERVER['SCRIPT_NAME'];
 
 if ($config['cf_analytics']) {
     echo $config['cf_analytics'];

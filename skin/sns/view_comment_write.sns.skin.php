@@ -13,24 +13,6 @@ if ($config['cf_twitter_key']) {
         include_once(G5_SNS_PATH."/twitter/twitterconfig.php");
 
         $twitter_user = false;
-        /*
-        if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
-            $twitter_url = G5_SNS_URL."/twitter/redirect.php";
-        } else {
-            $access_token = $_SESSION['access_token'];
-            $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-            $content = $connection->get('account/verify_credentials');
-
-            switch ($connection->http_code) {
-                case 200:
-                    $twitter_user = true;
-                    $twitter_url = $connection->getAuthorizeURL($token);
-                    break;
-                default :
-                    $twitter_url = G5_SNS_URL."/twitter/redirect.php";
-            }
-        }
-        */
 		$access_token = get_session('access_token');
         $access_oauth_token = isset($access_token['oauth_token']) ? $access_token['oauth_token'] : '';
         $access_oauth_token_secret = isset($access_token['oauth_token_secret']) ? $access_token['oauth_token_secret'] : '';

@@ -31,7 +31,6 @@ header("Expires: 0"); // rfc2616 - Section 14.21
 header("Pragma: no-cache"); // HTTP/1.0
 */
 
-$g5['dark'] = preg_match("/-inapp\(([^,]+),([^)]+)\)/", $_SERVER['HTTP_USER_AGENT'], $matches) && $matches[2] === 'dark' ? true : false;
 ?>
 <!doctype html>
 <html lang="ko-KR" prefix="og: http://ogp.me/ns#">
@@ -50,7 +49,9 @@ var g5_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
 var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";
 var g5_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
-var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
+var g5_theme_api_url   = "<?php echo G5_THEME_URL ?>/api.php";
+var g5_theme_api_token = "<?php if(!get_session('ss_theme_api_token')) set_session('ss_theme_api_token', md5(uniqid(mt_rand(), true))); echo get_session('ss_theme_api_token'); ?>";
+var g5_editor    = "<?php echo ($config['cf_editor'] && !empty($board['bo_use_dhtml_editor']))?$config['cf_editor']:''; ?>";
 var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 var g5_theme_url = "<?php echo G5_THEME_URL ?>";
 <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>

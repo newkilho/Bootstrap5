@@ -98,15 +98,9 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 
 	$name     = get_text($name, 0, true);
 
-    if (isset($cache['id:' . $mb_id]) && $cache['id:' . $mb_id]) {
-        return $cache['id:' . $mb_id];
-    } else if (
-        isset($name)
-        && isset($cache['name:' . $name])
-        && $cache['name:' . $name]
-    ) {
-        return $cache['name:' . $name];
-    }
+    // 목록 한 페이지에서 같은 회원이 반복되므로 file_exists 2회를 요청당 1회로
+    $cache_key = md5(serialize([$mb_id, $name, $email, $homepage, $option]));
+    if (isset($cache[$cache_key])) return $cache[$cache_key];
 
     $email = get_string_encrypt($email);
     $email = get_text($email);
@@ -133,9 +127,9 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 			$mb_img_url = G5_DATA_URL.'/member_image/'.substr($mb_id,0,2).'/'.$mb_icon_img;
 	} else {
 		if(!$bo_table)
-		  return array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'name'=>$name);
+		  return $cache[$cache_key] = array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'name'=>$name);
 
-		$menu .= '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name.'" title="'.$name.' 이름으로 검색" class="dropdown-item" rel="nofollow" onclick="return false;">'.$name.'</a>';
+		$menu .= '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.urlencode($sca).'&amp;sfl=wr_name,1&amp;stx='.urlencode($name).'" title="'.get_text($name).' 이름으로 검색" class="dropdown-item" rel="nofollow" onclick="return false;">'.$name.'</a>';
 	}
 
 	if (isset($board['bo_use_sideview']) && $board['bo_use_sideview'])
@@ -152,9 +146,9 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 			$menu .= '<a href="'.G5_BBS_URL.'/profile.php?mb_id='.$mb_id.'" onclick="win_profile(this.href); return false;" class="dropdown-item" >자기소개</a>';
 		if($bo_table) {
 			if($mb_id)
-				$menu .= '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&sca='.$sca.'&sfl=mb_id,1&stx='.$mb_id.'" class="dropdown-item" >아이디로 검색</a>';
+				$menu .= '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.urlencode($sca).'&amp;sfl=mb_id,1&amp;stx='.urlencode($mb_id).'" class="dropdown-item" >아이디로 검색</a>';
 			else
-				$menu .= '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table."&sca=".$sca.'&sfl=wr_name,1&stx='.$name.'" class="dropdown-item" >이름으로 검색</a>';
+				$menu .= '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.urlencode($sca).'&amp;sfl=wr_name,1&amp;stx='.urlencode($name).'" class="dropdown-item" >이름으로 검색</a>';
 		}
 		if($mb_id)
 			$menu .= '<a href="'.G5_BBS_URL.'/new.php?mb_id='.$mb_id.'" class="dropdown-item" onclick="check_goto_new(this.href, event);">전체게시물</a>';
@@ -170,7 +164,7 @@ function get_member_info($mb_id, $name='', $email='', $homepage='', $option=[])
 		$menu = '<span class="'.$css.'">'.$name.'</span>';
 	}
 
-    return array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'name'=>$menu);
+    return $cache[$cache_key] = array('ico'=>$mb_ico_url, 'img'=>$mb_img_url, 'name'=>$menu);
 }
 
 function chg_paging($write_pages)
@@ -195,35 +189,6 @@ function chg_paging($write_pages)
 	$write_pages = str_replace('다음', '<i class="fa fa-angle-right"></i>', $write_pages);
 
 	return $write_pages;
-
-	/*
-	$remove = array();
-	$remove[] = '<span class="sound_only">페이지';
-	$remove[] = '<span class="pg">';
-	$remove[] = '</span>';
-	$remove[] = ' pg_start';
-	$remove[] = ' pg_end';
-	$remove[] = ' pg_next';
-	$remove[] = ' pg_prev';
-
-	$write_pages = str_replace('<nav class="pg_wrap">', '<nav><ul class="pagination">', $write_pages);
-	$write_pages = str_replace('</nav>', '</ul></nav>', $write_pages);
-	$write_pages = str_replace($remove, '', $write_pages);
-	$write_pages = str_replace('pg_page', 'page-link', $write_pages);
-
-	$write_pages = str_replace('<a href="', '<li class="page-item"><a href="', $write_pages);
-	$write_pages = str_replace('</a>', '</a></li>', $write_pages);
-
-	$write_pages = str_replace('<span class="sound_only">열린<strong class="pg_current">', '<li class="page-item active"><a href="#" class="page-link">', $write_pages);
-	$write_pages = str_replace('</strong>', '</a></li>', $write_pages);
-
-	$write_pages = str_replace('처음', '<i class="fa fa-angle-double-left"></i>', $write_pages);
-	$write_pages = str_replace('이전', '<i class="fa fa-angle-left"></i>', $write_pages);
-	$write_pages = str_replace('다음', '<i class="fa fa-angle-right"></i>', $write_pages);
-	$write_pages = str_replace('맨끝', '<i class="fa fa-angle-double-right"></i>', $write_pages);
-
-	return $write_pages;
-	*/
 }
 
 function chg_board_list($str_board_list)
@@ -236,38 +201,3 @@ function chg_board_list($str_board_list)
 
 	return $str_board_list;
 }
-
-function kh_sql_query_after($result, $sql, $start_time, $end_time)
-{
-	global $g5;
-
-	if(empty($result))
-	{
-		if(!sql_num_rows(sql_query(" show tables like '{$g5['board_table']}_report'; "))) {
-			$sql = " create table if not exists {$g5['board_table']}_report (
-					   si_id int(11) not null auto_increment,
-					   bo_table varchar(20) not null default '',
-					   wr_id int(11) not null default '0',
-					   mb_id varchar(20) not null default '',
-					   si_datetime datetime not null default '0000-00-00 00:00:00',
-					   primary key (si_id),
-					   key bo_table (bo_table, wr_id, mb_id)
-					 ) ENGINE=MyISAM default CHARSET=utf8; ";
-			sql_query(get_db_create_replace($sql));
-		}
-
-		if(!sql_num_rows(sql_query(" show tables like '{$g5['member_table']}_block'; "))) {
-			$sql = " create table if not exists {$g5['member_table']}_block (
-					   bl_id int(11) not null auto_increment,
-					   bl_recv_mb_id varchar(20) not null default '',
-					   bl_send_mb_id varchar(20) not null default '',
-					   bl_datetime datetime not null default '0000-00-00 00:00:00',
-					   primary key (bl_id),
-					   key bl_recv_mb_id (bl_recv_mb_id)
-					 ) engine=MyISAM default charset=utf8; ";
-			sql_query(get_db_create_replace($sql));
-		}
-
-	}
-}
-add_event('sql_query_after', 'kh_sql_query_after', G5_HOOK_DEFAULT_PRIORITY, 4);

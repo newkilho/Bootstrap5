@@ -120,7 +120,7 @@ jQuery(function($){
                     }
                 },
                 error: function(data) {
-                    try { console.log(data) } catch (e) { alert(data.error) };
+                    alert('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
                 }
             });
 

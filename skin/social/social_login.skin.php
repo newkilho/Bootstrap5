@@ -14,6 +14,7 @@ if(G5_SOCIAL_USE_POPUP ) {
 ?>
 
 <?php if($config['cf_social_login_use']) { ?>
+<div id="sns_login">
 <div class="sns-wrap d-grid gap-2 mb-4">
 	<?php if(social_service_check('naver')){     //네이버 로그인을 사용한다면 ?>
 	<a href="<?php echo $self_url;?>?provider=naver&amp;url=<?php echo $urlencode;?>" class="btn btn-light text-light social_link" style="background-color: #1EC800" title="네이버"><img src="<?php echo get_social_skin_url().'/img/sns_naver_s.png' ?>"> 네이버로 로그인</a>
@@ -34,6 +35,7 @@ if(G5_SOCIAL_USE_POPUP ) {
 	<?php if(social_service_check('payco')){     //페이코 로그인을 사용한다면 ?>
 	<a href="<?php echo $self_url;?>?provider=payco&amp;url=<?php echo $urlencode;?>" class="btn btn-light text-light social_link" style="background-color: #DF0B00" title="페이코"><img src="<?php echo get_social_skin_url().'/img/sns_payco_s.png' ?>"> 페이코로 로그인</a>
 	<?php }     //end if ?>
+</div>
 </div>
 
 <hr />

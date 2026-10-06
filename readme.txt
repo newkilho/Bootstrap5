@@ -1,5 +1,5 @@
 Theme Name: Bootstrap5
-Theme URI: https://theme.kilho.net
+Theme URI: https://gnu5.demobox.top
 Maker: KILHO.NET
 Maker URI: https://kilho.net
 Version: 0.9.7

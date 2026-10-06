@@ -51,7 +51,7 @@ $report_href = ($is_member && !$is_admin && $member['mb_id'] != $view['mb_id'] &
 			$attach .= '
 	<tr>
 		<th style="width: 6rem;">'.$board['bo_'.$i.'_subj'].'</th>
-		<td>'.$write['wr_'.$i].'</td>
+		<td>'.get_text($write['wr_'.$i]).'</td>
 	</tr>
 			';
 

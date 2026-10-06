@@ -19,9 +19,6 @@ if(!$is_admin)
 $sql .= " order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $lt_style = "";
-    if ($i%2==1) $lt_style = "margin-left:2%";
-    else $lt_style = "";
 ?>
 	<div class="col-md-6">
 		<?=latest('theme/basic', $row['bo_table'], 5)?>

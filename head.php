@@ -40,7 +40,7 @@ if(defined('_INDEX_')) include G5_THEME_PATH.'/newwin.inc.php';
 				<input type="hidden" name="sfl" value="wr_subject||wr_content">
 				<input type="hidden" name="sop" value="and">
 				<div class="input-group mt-2 mb-1 my-md-0">
-					<input class="form-control" type="search" name="stx" value="<?=$stx?>" placeholder="검색어" aria-label="Search">
+					<input class="form-control" type="search" name="stx" value="<?php echo get_text($stx) ?>" placeholder="검색어" aria-label="Search">
 					<button class="btn btn-secondary" type="submit">검색</button>
 				</div>
 			</form>
