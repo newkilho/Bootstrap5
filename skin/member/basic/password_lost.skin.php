@@ -3,9 +3,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/custom.css">');
 
-if($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-    <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>    
-<?php } ?>
+if($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) {
+    add_javascript('<script src="'.G5_JS_URL.'/certify.js"></script>', 0);
+}
+?>
 
 <!-- 회원정보 찾기 시작 { -->
 <div id="find_info" class="password new_win<?php if($config['cf_cert_use'] != 0 && $config['cf_cert_find'] != 0) { ?> cert<?php } ?>">

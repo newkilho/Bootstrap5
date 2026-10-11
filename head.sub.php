@@ -18,7 +18,7 @@ include_once(G5_THEME_PATH.'/functions.php');
 include_once(G5_THEME_PATH.'/head.def.php');
 
 // 팝업류는 그누보드 기본 스타일 유지
-add_stylesheet('<link rel="stylesheet" href="'.run_replace('head_css_url', G5_THEME_CSS_URL.'/default'.(defined('_SHOP_') ? '_shop' : '').'.css?ver='.G5_CSS_VER, G5_THEME_URL).'">', 1);
+add_stylesheet('<link rel="stylesheet" href="'.run_replace('head_css_url', G5_THEME_CSS_URL.'/default'.(defined('_SHOP_') ? '_shop' : '').'.css', G5_THEME_URL).'">', 1);
 
 if ($is_member) {
 	$sr_admin_msg = '';

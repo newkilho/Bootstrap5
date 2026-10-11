@@ -68,13 +68,13 @@ add_javascript('<script src="'.G5_JS_URL.'/jquery-1.12.4.min.js"></script>', 0);
 add_javascript('<script src="'.G5_JS_URL.'/jquery-migrate-1.4.1.min.js"></script>', 0);
 if (defined('_SHOP_')) {
 	if(!G5_IS_MOBILE) {
-		add_javascript('<script src="'.G5_JS_URL.'/jquery.shop.menu.js?ver='.G5_JS_VER.'"></script>', 0);
+		add_javascript('<script src="'.G5_JS_URL.'/jquery.shop.menu.js"></script>', 0);
 	}
 } else {
-	add_javascript('<script src="'.G5_JS_URL.'/jquery.menu.js?ver='.G5_JS_VER.'"></script>', 0);
+	add_javascript('<script src="'.G5_JS_URL.'/jquery.menu.js"></script>', 0);
 }
-add_javascript('<script src="'.G5_JS_URL.'/common.js?ver='.G5_JS_VER.'"></script>', 0);
-add_javascript('<script src="'.G5_JS_URL.'/wrest.js?ver='.G5_JS_VER.'"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/common.js"></script>', 0);
+add_javascript('<script src="'.G5_JS_URL.'/wrest.js"></script>', 0);
 add_javascript('<script src="'.G5_JS_URL.'/placeholders.min.js"></script>', 0);
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/font-awesome/css/font-awesome.min.css">', 0);
 
